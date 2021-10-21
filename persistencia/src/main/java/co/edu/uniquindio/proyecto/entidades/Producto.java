@@ -58,7 +58,7 @@ public class Producto implements Serializable {
     @ElementCollection
     private Map<String,String> imagenes;
 
-    @OneToMany(mappedBy = "producto")
+    @OneToMany(mappedBy = "codigoProducto")
     private List<Chat> chats;
 
     @OneToMany(mappedBy = "codigoProducto")

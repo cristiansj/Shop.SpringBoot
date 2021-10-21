@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @MappedSuperclass
-
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Getter
 @Setter
