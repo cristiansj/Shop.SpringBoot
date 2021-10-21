@@ -3,6 +3,7 @@ package co.edu.uniquindio.proyecto.entidades;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,23 +13,19 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @ToString
-public class Ciudad implements Serializable {
-
+public class Categoria implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
 
-    @Column(length = 100,nullable = false)
+    @Column(nullable = false,length = 50)
     private String nombre;
 
-    @OneToMany(mappedBy = "codigoCiudad")
+    @ManyToMany
     private List<Producto> productos;
 
-    @OneToMany(mappedBy = "ciudad")
-    private List<Usuario> usuarios;
-
-    public Ciudad(String nombre) {
+    public Categoria(String nombre) {
         this.nombre = nombre;
     }
 }

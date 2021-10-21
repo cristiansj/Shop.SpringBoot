@@ -3,37 +3,38 @@ package co.edu.uniquindio.proyecto.entidades;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-@ToString
 public class Usuario extends Persona implements Serializable {
 
-    @Column(nullable = false,unique = true,length = 120)
-    private String email;
-
-    @ElementCollection
-    private Map<String,String> numTelefonos;
-
     @ManyToOne
-    @JoinColumn(nullable = false)
     private Ciudad ciudad;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<Prestamo> prestamos;
+    @OneToMany(mappedBy = "usuarioComprador")
+    private List<Chat> chat;
 
-    public Usuario(String codigo, String nombre, LocalDate fechaNacimiento, EnumGenero genero, String email, Map<String, String> numTelefonos, Ciudad ciudad) {
-        super(codigo, nombre, fechaNacimiento, genero);
-        this.email = email;
-        this.numTelefonos = numTelefonos;
+    @ManyToOne
+    private Mensaje mensaje;
+
+    @OneToMany(mappedBy = "codigoVendedor")
+    private List<Producto> productos;
+
+    @OneToMany(mappedBy = "codigoUsuario")
+    private List<Comentario>comentarios;
+
+    @OneToMany(mappedBy = "codigoUsuario")
+    private List<SubastaUsuario> subastaUsuarios;
+
+    @OneToMany(mappedBy = "codigoUsuario")
+    private List<Compra> compras;
+
+    public Usuario(String nombre, String email, String password, Ciudad ciudad) {
+        super(nombre, email, password);
         this.ciudad = ciudad;
     }
 }
-

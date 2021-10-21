@@ -1,7 +1,6 @@
 package co.edu.uniquindio.proyecto.entidades;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -12,23 +11,22 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @ToString
-public class Ciudad implements Serializable {
-
+public class Chat implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Integer codigo;
 
-    @Column(length = 100,nullable = false)
-    private String nombre;
+    @ManyToOne
+    private Usuario usuarioComprador;
 
-    @OneToMany(mappedBy = "codigoCiudad")
-    private List<Producto> productos;
+    @ManyToOne
+    private Producto codigoProducto;
 
-    @OneToMany(mappedBy = "ciudad")
-    private List<Usuario> usuarios;
+    @OneToMany(mappedBy = "codigoChat")
+    private List<Mensaje> mensajes;
 
-    public Ciudad(String nombre) {
-        this.nombre = nombre;
+    public Chat(Usuario usuarioComprador) {
+        this.usuarioComprador = usuarioComprador;
     }
 }
