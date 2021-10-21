@@ -9,9 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class PersistenciaApplication {
     public static void main(String[] args) {
+        
+        SpringApplication.run(PersistenciaApplication.class,args);
 
-      //  SpringApplication.run(PersistenciaApplication.class,args);
-        Categoria categoria = new Categoria(1,"Tecnologia");
-        System.out.println(categoria.getCodigo());
     }
 }
