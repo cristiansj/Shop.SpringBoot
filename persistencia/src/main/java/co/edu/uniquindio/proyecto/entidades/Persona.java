@@ -33,7 +33,8 @@ public class Persona implements Serializable {
     @ElementCollection()
     private Map<String,String> numTelefonos = new HashMap<>();
 
-    public Persona(String nombre, String email, String password) {
+    public Persona(Integer codigo, String nombre, String email, String password) {
+        this.codigo = codigo;
         this.nombre = nombre;
         this.email = email;
         this.password = password;
