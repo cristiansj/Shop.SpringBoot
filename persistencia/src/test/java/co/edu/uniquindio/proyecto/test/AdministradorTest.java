@@ -19,6 +19,7 @@ import java.util.Map;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class AdministradorTest {
+
     @Autowired
     private AdministradorRepository administradorRepository;
 

@@ -36,27 +36,20 @@ public class CategoriaTest {
     }
 
     @Test
-    @Sql("claspath:categorias.sql")
+    @Sql("classpath:categorias.sql")
     public void eliminarTest(){
-
-        //categoría tiene código autogenerado, asumimos que tenemos (0,1,2) en ID.
-        Categoria categoria = categoriaRepository.findById(2).orElse(null);
-
-//      elimino la categoria.
         categoriaRepository.deleteById(2);
-
-        Categoria categoriaBuscada = categoriaRepository.findById(2).orElse(null);
-
-        Assertions.assertNull(categoriaBuscada);
+        Categoria usuarioBuscado = categoriaRepository.findById(2).orElse(null);
+        Assertions.assertNull(usuarioBuscado);
     }
 
 
     @Test
-    @Sql("claspath:categorias.sql")
+    @Sql("classpath:categorias.sql")
     public void actualizarTest(){
 
         //Asumimos que tenemos 3 categorías ya predefinidas con código autogenerados(0,1,2) y obtenemos
-        Categoria categoria = categoriaRepository.findById(2).orElse(null);
+        Categoria categoria = categoriaRepository.findById(1).orElse(null);
 
         //Modifico el email.
         categoria.setNombre("Mascotas");
@@ -64,14 +57,14 @@ public class CategoriaTest {
         //Guardo el usuario de nuevo(actualizo).
         categoriaRepository.save(categoria);
 
-        Categoria actualizada = categoriaRepository.findById(2).orElse(null);
+        Categoria actualizada = categoriaRepository.findById(1).orElse(null);
 
         Assertions.assertEquals("Mascotas", actualizada.getNombre());
 
     }
 
     @Test
-    @Sql("claspath:usuarios.sql")
+    @Sql("classpath:categorias.sql")
     public void listarTest(){
 
         //Obtengo las categorias
