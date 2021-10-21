@@ -10,6 +10,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@ToString
 public class Usuario extends Persona implements Serializable {
 
     @ManyToOne

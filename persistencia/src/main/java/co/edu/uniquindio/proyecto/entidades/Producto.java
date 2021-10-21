@@ -1,9 +1,6 @@
 package co.edu.uniquindio.proyecto.entidades;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
@@ -17,6 +14,7 @@ import java.util.Map;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
+@ToString
 public class Producto implements Serializable {
     @Id
     @EqualsAndHashCode.Include
@@ -50,6 +48,7 @@ public class Producto implements Serializable {
     private Ciudad codigoCiudad;
 
     @ManyToMany(mappedBy = "productos")
+    @ToString.Exclude
     private List<Categoria> categorias;
 
     @ManyToOne
@@ -59,15 +58,19 @@ public class Producto implements Serializable {
     private Map<String,String> imagenes;
 
     @OneToMany(mappedBy = "codigoProducto")
+    @ToString.Exclude
     private List<Chat> chats;
 
     @OneToMany(mappedBy = "codigoProducto")
+    @ToString.Exclude
     private List<Comentario> comentarios;
 
     @OneToMany(mappedBy = "producto")
+    @ToString.Exclude
     private List<Subasta> subastas;
 
     @OneToMany(mappedBy = "codigoProducto")
+    @ToString.Exclude
     private List<DetalleCompra> detalleCompras;
 
     public Producto(String nombre, Integer disponibilidad, String descripcion, Float precio, LocalDateTime fechaLimite, List<Categoria> categorias, Map<String, String> imagenes) {

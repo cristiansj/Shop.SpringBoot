@@ -23,6 +23,7 @@ public class Mensaje implements Serializable {
     private String mensaje;
 
     @OneToMany(mappedBy = "mensaje")
+    @ToString.Exclude
     private List<Usuario> emisor;
 
     @Column(nullable = false, columnDefinition ="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
