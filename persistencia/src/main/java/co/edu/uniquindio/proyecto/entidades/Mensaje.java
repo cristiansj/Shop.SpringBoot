@@ -32,7 +32,8 @@ public class Mensaje implements Serializable {
     @ManyToOne
     private Chat codigoChat;
 
-    public Mensaje(String mensaje) {
+    public Mensaje(Integer codigo, String mensaje) {
+        this.codigo = codigo;
         this.mensaje = mensaje;
     }
 }

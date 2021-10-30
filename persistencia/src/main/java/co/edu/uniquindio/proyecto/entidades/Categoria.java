@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 public class Categoria implements Serializable {
+
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)

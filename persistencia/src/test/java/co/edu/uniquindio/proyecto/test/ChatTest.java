@@ -22,9 +22,9 @@ public class ChatTest {
 
     @Test
     public void registrarTest(){
-        Ciudad ciudad = new Ciudad("Armenia");
+        Ciudad ciudad = new Ciudad(1,"Armenia");
         Usuario usuario = new Usuario(1,"Tatiana","tatiana@email.com","1234",ciudad);
-        Chat chat = new Chat(usuario);
+        Chat chat = new Chat(1, usuario);
 
         Chat chatG = chatRepository.save(chat);
         Assertions.assertNotNull(chatG);

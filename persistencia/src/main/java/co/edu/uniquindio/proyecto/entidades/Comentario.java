@@ -38,7 +38,10 @@ public class Comentario implements Serializable {
     @ManyToOne
     private Usuario codigoUsuario;
 
-    public Comentario(String mensaje) {
+    public Comentario(Integer codigo, String mensaje, Integer calificacion, LocalDateTime fechaComentario) {
+        this.codigo = codigo;
         this.mensaje = mensaje;
+        this.calificacion = calificacion;
+        this.fechaComentario = fechaComentario;
     }
 }

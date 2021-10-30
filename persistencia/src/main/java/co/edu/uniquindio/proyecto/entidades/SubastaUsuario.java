@@ -22,7 +22,7 @@ public class SubastaUsuario implements Serializable {
 
     @Positive
     @Column(nullable = false)
-    private Integer Valor;
+    private Integer valor;
 
     @Column(nullable = false)
     private LocalDateTime fechaSubasta;
@@ -33,8 +33,9 @@ public class SubastaUsuario implements Serializable {
     @ManyToOne
     private Usuario codigoUsuario;
 
-    public SubastaUsuario(Integer valor, LocalDateTime fechaSubasta) {
-        Valor = valor;
+    public SubastaUsuario(Integer codigo, Integer valor, LocalDateTime fechaSubasta) {
+        this.codigo = codigo;
+        this.valor = valor;
         this.fechaSubasta = fechaSubasta;
     }
 }

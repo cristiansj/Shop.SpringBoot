@@ -30,7 +30,8 @@ public class Ciudad implements Serializable {
     @ToString.Exclude
     private List<Usuario> usuarios;
 
-    public Ciudad(String nombre) {
+    public Ciudad(Integer codigo, String nombre) {
+        this.codigo = codigo;
         this.nombre = nombre;
     }
 }
