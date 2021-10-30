@@ -23,4 +23,7 @@ public class Colaboracion implements Serializable {
     @ToString.Exclude
     private List<Producto> producto;
 
+    public Colaboracion(Integer codigo) {
+        this.codigo = codigo;
+    }
 }

@@ -32,7 +32,8 @@ public class Compra implements Serializable {
     @ToString.Exclude
     private List<DetalleCompra> detalleCompras;
 
-    public Compra(String medioPago) {
+    public Compra(Integer codigo, String medioPago) {
+        this.codigo = codigo;
         this.medioPago = medioPago;
     }
 }
