@@ -32,7 +32,7 @@ public class Producto implements Serializable {
 
     @Column(nullable = false)
     @Positive
-    private Float precio;
+    private Double precio;
 
     @Column(nullable = false)
     private LocalDateTime fechaLimite;
@@ -73,7 +73,7 @@ public class Producto implements Serializable {
     private List<DetalleCompra> detalleCompras;
 
 
-    public Producto(String nombre, Integer disponibilidad, String descripcion, Float precio, LocalDateTime fechaLimite) {
+    public Producto(Integer codigo, String nombre, Integer disponibilidad, String descripcion, Double precio, LocalDateTime fechaLimite) {
         this.nombre = nombre;
         this.disponibilidad = disponibilidad;
         this.descripcion = descripcion;
