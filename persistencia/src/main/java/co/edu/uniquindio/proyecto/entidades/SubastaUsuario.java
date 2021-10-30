@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
-@ToString
 public class SubastaUsuario implements Serializable {
 
     @Id

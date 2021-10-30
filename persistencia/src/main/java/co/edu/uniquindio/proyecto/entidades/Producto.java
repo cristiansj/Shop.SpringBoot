@@ -14,7 +14,6 @@ import java.util.Map;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
-@ToString
 public class Producto implements Serializable {
     @Id
     @EqualsAndHashCode.Include
@@ -73,14 +72,12 @@ public class Producto implements Serializable {
     @ToString.Exclude
     private List<DetalleCompra> detalleCompras;
 
-    public Producto(Integer codigo,String nombre, Integer disponibilidad, String descripcion, Float precio, LocalDateTime fechaLimite, List<Categoria> categorias, Map<String, String> imagenes) {
-        this.codigo = codigo;
+
+    public Producto(String nombre, Integer disponibilidad, String descripcion, Float precio, LocalDateTime fechaLimite) {
         this.nombre = nombre;
         this.disponibilidad = disponibilidad;
         this.descripcion = descripcion;
         this.precio = precio;
         this.fechaLimite = fechaLimite;
-        this.categorias = categorias;
-        this.imagenes = imagenes;
     }
 }

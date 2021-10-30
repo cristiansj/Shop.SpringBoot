@@ -13,7 +13,6 @@ import java.util.Map;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
-@ToString
 public class Colaboracion implements Serializable {
 
     @Id
