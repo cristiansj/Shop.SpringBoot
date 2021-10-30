@@ -1,1 +1,2 @@
-insert into Chat values (1,null ,null);
+insert into chat values ();
+insert into chat values ();

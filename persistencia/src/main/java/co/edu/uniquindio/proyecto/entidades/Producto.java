@@ -72,13 +72,11 @@ public class Producto implements Serializable {
     @ToString.Exclude
     private List<DetalleCompra> detalleCompras;
 
-    public Producto(String nombre, Integer disponibilidad, String descripcion, Float precio, LocalDateTime fechaLimite, List<Categoria> categorias, Map<String, String> imagenes) {
+    public Producto(String nombre, Integer disponibilidad, String descripcion, Float precio, LocalDateTime fechaLimite) {
         this.nombre = nombre;
         this.disponibilidad = disponibilidad;
         this.descripcion = descripcion;
         this.precio = precio;
         this.fechaLimite = fechaLimite;
-        this.categorias = categorias;
-        this.imagenes = imagenes;
     }
 }
