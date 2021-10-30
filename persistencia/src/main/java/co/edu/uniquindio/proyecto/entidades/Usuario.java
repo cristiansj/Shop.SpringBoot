@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 public class Usuario extends Persona implements Serializable {
 
     @ManyToOne
@@ -19,9 +18,6 @@ public class Usuario extends Persona implements Serializable {
 
     @OneToMany(mappedBy = "usuarioComprador")
     private List<Chat> chat;
-
-    @ManyToOne
-    private Mensaje mensaje;
 
     @OneToMany(mappedBy = "codigoVendedor")
     private List<Producto> productos;

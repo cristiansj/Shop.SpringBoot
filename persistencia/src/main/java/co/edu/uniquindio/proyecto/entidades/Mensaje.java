@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
-@ToString
 public class Mensaje implements Serializable {
     @Id
     @EqualsAndHashCode.Include
@@ -22,9 +21,8 @@ public class Mensaje implements Serializable {
     @Column(nullable = false,length = 250)
     private String mensaje;
 
-    @OneToMany(mappedBy = "mensaje")
     @ToString.Exclude
-    private List<Usuario> emisor;
+    private String emisor;
 
     @Column(nullable = false, columnDefinition ="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime fecha;
@@ -32,7 +30,10 @@ public class Mensaje implements Serializable {
     @ManyToOne
     private Chat codigoChat;
 
-    public Mensaje(String mensaje) {
+    public Mensaje(Integer codigo, String mensaje, String emisor, LocalDateTime fecha) {
+        this.codigo = codigo;
         this.mensaje = mensaje;
+        this.emisor = emisor;
+        this.fecha = fecha;
     }
 }

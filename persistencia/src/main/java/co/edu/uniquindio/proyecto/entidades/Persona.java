@@ -14,7 +14,6 @@ import java.util.Map;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
-@ToString
 public class Persona implements Serializable {
     @Id
     @EqualsAndHashCode.Include

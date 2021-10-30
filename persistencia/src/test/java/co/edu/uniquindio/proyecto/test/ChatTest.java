@@ -13,6 +13,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.util.List;
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class ChatTest {
@@ -22,9 +24,8 @@ public class ChatTest {
 
     @Test
     public void registrarTest(){
-        Ciudad ciudad = new Ciudad("Armenia");
-        Usuario usuario = new Usuario(1,"Tatiana","tatiana@email.com","1234",ciudad);
-        Chat chat = new Chat(usuario);
+        Ciudad ciudad = new Ciudad(1,"Armenia");
+        Chat chat = new Chat(1);
 
         Chat chatG = chatRepository.save(chat);
         Assertions.assertNotNull(chatG);
@@ -36,5 +37,23 @@ public class ChatTest {
         chatRepository.deleteById(1);
         Chat chatBuscado = chatRepository.findById(1).orElse(null);
         Assertions.assertNull(chatBuscado);
+    }
+
+    @Test
+    @Sql("classpath:chat.sql")
+    public void actualizarTest(){
+        Chat chatG = chatRepository.findById(1).orElse(null);
+        chatG.setCodigo(4);
+        chatRepository.save(chatG);
+
+        Chat chatBuscado = chatRepository.findById(1).orElse(null);
+        Assertions.assertEquals(4,chatBuscado.getCodigo());
+    }
+
+    @Test
+    @Sql("classpath:chat.sql")
+    public void ListarTest(){
+        List<Chat> chats = chatRepository.findAll();
+        chats.forEach(u -> System.out.println(u));
     }
 }

@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
-@ToString
 public class Compra implements Serializable {
     @Id
     @EqualsAndHashCode.Include
@@ -32,8 +31,9 @@ public class Compra implements Serializable {
     @ToString.Exclude
     private List<DetalleCompra> detalleCompras;
 
-    public Compra(Integer codigo, String medioPago) {
+    public Compra(Integer codigo, LocalDateTime fechaCompra, String medioPago) {
         this.codigo = codigo;
+        this.fechaCompra = fechaCompra;
         this.medioPago = medioPago;
     }
 }

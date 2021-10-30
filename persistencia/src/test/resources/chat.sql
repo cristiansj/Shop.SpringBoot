@@ -1,2 +1,1 @@
-insert into Ciudad values ("Armenia")
-insert into Usuario values (1,"Cristian","cristian@email.com","123",)
+insert into Chat values (1,null ,null);
