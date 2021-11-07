@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
+@ToString
 public class Subasta implements Serializable {
 
     @Id
@@ -28,6 +29,7 @@ public class Subasta implements Serializable {
     private Producto producto;
 
     @OneToMany(mappedBy = "codigoSubasta")
+    @ToString.Exclude
     private List<SubastaUsuario> subastaUsuarios;
 
     public Subasta(Integer codigo, LocalDateTime fechaLimite) {

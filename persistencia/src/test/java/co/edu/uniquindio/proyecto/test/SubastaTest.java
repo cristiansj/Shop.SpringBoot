@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.test;
 
+import co.edu.uniquindio.proyecto.entidades.Chat;
 import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Subasta;
 import co.edu.uniquindio.proyecto.repositorios.ProductoRepository;
@@ -73,4 +74,18 @@ public class SubastaTest {
         subastas.forEach( s -> System.out.println(s));
     }
 
+    @Test
+    @Sql("classpath:subasta.sql")
+    public void ListarTotalProductosPorCategoría(){
+        List<Object[]> respuesta = subastaRepository.obtenerTotalProductosSubastadosPorCategoría();
+        respuesta.forEach(r -> System.out.println(r[0] +", "+ r[1]));
+    }
+
+    @Test
+    @Sql("classpath:subasta.sql")
+    public void ListarChatsDeVendedor() {
+        List<Subasta> respuesta = subastaRepository.obtenerSubastasVigentesPorCategoría(4);
+        respuesta.forEach(s -> System.out.println(s));
+    }
 }
+

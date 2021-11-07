@@ -58,4 +58,11 @@ public class CompraTest {
         List<Compra> compras = compraRepository.findAll();
         compras.forEach(u -> System.out.println(u));
     }
+
+    @Test
+    @Sql("classpath:compra.sql")
+    public void ListarCantidadComprasPorMedioPago(){
+        List<Object[]> respuesta = compraRepository.listarTotalComprasPorMedioDePago();
+        respuesta.forEach(r -> System.out.println(r[0] +", "+ r[1]));
+    }
 }

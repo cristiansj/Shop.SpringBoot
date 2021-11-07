@@ -55,4 +55,12 @@ public class ChatTest {
         List<Chat> chats = chatRepository.findAll();
         chats.forEach(u -> System.out.println(u));
     }
+
+    @Test
+    @Sql("classpath:chat.sql")
+    public void ListarChatsDeVendedor() {
+        List<Chat> respuesta = chatRepository.listarChatsDeVendedor(3);
+        respuesta.forEach(chat -> System.out.println("el vendedor es ------------------->"+chat.getCodigoProducto().getCodigoVendedor().getCodigo()));
+    }
+
 }

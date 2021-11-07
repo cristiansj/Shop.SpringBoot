@@ -74,4 +74,11 @@ public class ComentarioTest {
         List<Comentario> comentarios = comentarioRepository.findAll();
         comentarios.forEach(c -> System.out.println(c));
     }
+
+    @Test
+    @Sql("classpath:comentario.sql")
+    public void ListarCalificacionesPorCategoría(){
+        List<Object[]> respuesta = comentarioRepository.listarCalificacionPromedioPorCategoría();
+        respuesta.forEach(r -> System.out.println(r[0] +", "+ r[1]));
+    }
 }
