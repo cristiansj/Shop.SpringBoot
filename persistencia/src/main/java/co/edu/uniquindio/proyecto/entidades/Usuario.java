@@ -16,6 +16,12 @@ public class Usuario extends Persona implements Serializable {
     @ManyToOne
     private Ciudad ciudad;
 
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    @OneToMany
+    private List<Producto> productosFavoritos;
+
     @OneToMany(mappedBy = "usuarioComprador")
     private List<Chat> chat;
 
@@ -31,8 +37,9 @@ public class Usuario extends Persona implements Serializable {
     @OneToMany(mappedBy = "codigoUsuario")
     private List<Compra> compras;
 
-    public Usuario(Integer codigo, String nombre, String email, String password, Ciudad ciudad) {
+    public Usuario(Integer codigo, String nombre,String username, String email, String password, Ciudad ciudad) {
         super(codigo, nombre, email, password);
+        this.username = username;
         this.ciudad = ciudad;
     }
 }

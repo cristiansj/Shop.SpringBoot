@@ -4,6 +4,7 @@ import co.edu.uniquindio.proyecto.entidades.Chat;
 import co.edu.uniquindio.proyecto.entidades.Ciudad;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 import co.edu.uniquindio.proyecto.repositorios.ChatRepository;
+import co.edu.uniquindio.proyecto.repositorios.CiudadRepository;
 import co.edu.uniquindio.proyecto.repositorios.UsuarioRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,10 +21,15 @@ public class UsuarioTest {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private CiudadRepository ciudadRepository;
 
     @Test
     public void registrarTest(){
-        Usuario usuario = new Usuario(1,"Tatiana","tatiana@email.com","123",null);
+        Ciudad ciudad =  new Ciudad(1, "Armenia");
+        ciudadRepository.save(ciudad);
+
+        Usuario usuario = new Usuario(1,"Tatiana","tati","tatiana@email.com","123", ciudadRepository.getById(1));
 
         Usuario usuarioG = usuarioRepository.save(usuario);
         Assertions.assertNotNull(usuarioG);
