@@ -89,9 +89,25 @@ public class UsuarioServicioImplementation implements UsuarioServicio{
 
     @Override
     public Usuario obtenerUsuario(Integer codigo) throws Exception {
+
         Optional<Usuario> buscado = buscarPorCodigo(codigo);
         if(buscado.isEmpty()){
             throw new Exception("No existe ningún usuario registrado con ese código");
+        }
+
+        return buscado.get();
+    }
+
+    @Override
+    public Usuario hacerLogin(String email, String password) throws Exception {
+
+        Optional<Usuario> buscado = buscarPorEmail(email);
+        if (buscado.isEmpty()){
+            throw new Exception("El email ingresado no está asociado a niguna cuenta");
+        }
+        buscado = usuarioRepository.findByEmailAndPassword(email, password);
+        if(buscado.isEmpty()){
+            throw new Exception("La contraseña es incorrecta");
         }
 
         return buscado.get();

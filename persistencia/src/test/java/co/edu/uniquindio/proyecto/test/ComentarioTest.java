@@ -1,8 +1,6 @@
 package co.edu.uniquindio.proyecto.test;
 
-import co.edu.uniquindio.proyecto.entidades.Ciudad;
-import co.edu.uniquindio.proyecto.entidades.Comentario;
-import co.edu.uniquindio.proyecto.entidades.Mensaje;
+import co.edu.uniquindio.proyecto.entidades.*;
 import co.edu.uniquindio.proyecto.repositorios.CiudadRepository;
 import co.edu.uniquindio.proyecto.repositorios.ComentarioRepository;
 import co.edu.uniquindio.proyecto.repositorios.MensajeRepository;

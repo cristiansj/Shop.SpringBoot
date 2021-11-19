@@ -60,7 +60,7 @@ public class UsuarioServicioTest {
     }
 
     @Test
-    public  void actualizarTest() throws Exception{
+    public void actualizarTest() throws Exception{
 
         Usuario user1 = new Usuario(1, "Pepe", "pepito", "Pepe123@email.com", "1234", null);
         usuarioServicio.registrarUsuario(user1);
@@ -74,5 +74,22 @@ public class UsuarioServicioTest {
             e.printStackTrace();
             Assertions.assertTrue(false);
         }
+    }
+
+    @Test
+    public void loginTest() throws Exception{
+
+        Usuario user1 = new Usuario(1, "Pepe", "pepito", "Pepe123@email.com", "1234", null);
+
+        usuarioServicio.registrarUsuario(user1);
+
+        try {
+            Usuario buscado = usuarioServicio.hacerLogin("Pepe123@email.com", "1234");
+            Assertions.assertNotNull(buscado);
+        }catch (Exception e){
+            e.printStackTrace();
+            Assertions.assertTrue(false);
+        }
+
     }
 }

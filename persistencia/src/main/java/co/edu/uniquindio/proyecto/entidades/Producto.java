@@ -3,7 +3,10 @@ package co.edu.uniquindio.proyecto.entidades;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +27,7 @@ public class Producto implements Serializable {
     private String nombre;
 
     @Column(nullable = false)
-    @Positive
+    @PositiveOrZero
     private Integer disponibilidad;
 
     @Column(length = 250)
@@ -34,6 +37,7 @@ public class Producto implements Serializable {
     @Positive
     private Double precio;
 
+    @Future
     @Column(nullable = false)
     private LocalDateTime fechaLimite;
 
