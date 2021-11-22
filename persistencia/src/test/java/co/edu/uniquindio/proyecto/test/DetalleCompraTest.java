@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,10 +28,13 @@ public class DetalleCompraTest {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    ProductoRepository productoRepository;
+    private ProductoRepository productoRepository;
 
     @Autowired
-    CompraRepository compraRepository;
+    private CompraRepository compraRepository;
+
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
 
     /*
@@ -48,8 +52,12 @@ public class DetalleCompraTest {
         Usuario usuario = new Usuario(1, "Pepe", "pepito123", "pepito123@gmail.com", "1245", ciudad, numTelefonos);
         usuarioRepository.save(usuario);
 
-        LocalDateTime ldt = LocalDateTime.now();
-        Producto producto = new Producto(1, "Camiseta", 15, "Camiseta blanca", "CamisetaB12", "URLCamisetaB12", 34000D, ldt, usuario, ciudad);
+        LocalDateTime ldt = LocalDateTime.of(2022, 12, 12, 11, 22, 33);
+        Categoria categoria1 = new Categoria(1, "Ropa");
+        ArrayList<Categoria> categorias= new ArrayList<Categoria>();
+        categoriaRepository.save(categoria1);
+        categorias.add(categoria1);
+        Producto producto = new Producto(1, "Camiseta", 15, "Camiseta blanca", "CamisetaB12", "URLCamisetaB12", 34000D, ldt, usuario, ciudad, categorias);
         productoRepository.save(producto);
 
         LocalDateTime ldt2 = LocalDateTime.now();

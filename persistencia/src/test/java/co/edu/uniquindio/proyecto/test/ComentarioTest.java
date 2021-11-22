@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class ComentarioTest {
     @Autowired
     UsuarioRepository usuarioRepository;
 
+    @Autowired
+    CategoriaRepository categoriaRepository;
+
     /*
     Prueba para saber si los comentarios se están guardando bien en la base de datos.
      */
@@ -44,7 +48,11 @@ public class ComentarioTest {
         usuarioRepository.save(usuario);
         //Creo el producto que se va a comentar.
         LocalDateTime ldt = LocalDateTime.of(2022, 11, 4, 23, 11, 03);
-        Producto producto = new Producto(5, "Camiseta AC/DC", 10, "Increible camiseta negra con logo de AC/DC", "camiseta", "urlCamisetaACDC", 70000D, ldt, usuario, ciudad);
+        Categoria categoria1 = new Categoria(1, "Ropa");
+        ArrayList<Categoria> categorias= new ArrayList<Categoria>();
+        categoriaRepository.save(categoria1);
+        categorias.add(categoria1);
+        Producto producto = new Producto(5, "Camiseta AC/DC", 10, "Increible camiseta negra con logo de AC/DC", "camiseta", "urlCamisetaACDC", 70000D, ldt, usuario, ciudad, categorias);
         productoRepository.save(producto);
         //Creo un comentario y lo guardo.
         Comentario comentario = new Comentario(1,"Me gusta mucho el producto", 4, LocalDateTime.now(), producto, usuario);

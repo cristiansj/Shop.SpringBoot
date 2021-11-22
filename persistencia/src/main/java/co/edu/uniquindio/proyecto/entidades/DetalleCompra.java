@@ -36,5 +36,7 @@ public class DetalleCompra implements Serializable {
         this.codigo = codigo;
         this.unidades = unidades;
         this.precioProducto = precioProducto;
+        this.codigoCompra = compra;
+        this.codigoProducto = producto;
     }
 }

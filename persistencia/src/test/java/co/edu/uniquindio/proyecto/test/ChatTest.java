@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +31,9 @@ public class ChatTest {
     @Autowired
     private ProductoRepository productoRepository;
 
+    @Autowired
+    private  CategoriaRepository categoriaRepository;
+
     @Test
     public void registrarTest(){
 
@@ -43,8 +47,11 @@ public class ChatTest {
         usuarioRepository.save(usuario);
 
         LocalDateTime ldt = LocalDateTime.of(2022, 11, 12, 6, 15, 59);
-
-        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra", "camisetaN17", "URLcamisetaN17", 25000D, ldt, usuario, ciudad);
+        Categoria categoria1 = new Categoria(1, "Ropa");
+        ArrayList<Categoria> categorias= new ArrayList<Categoria>();
+        categoriaRepository.save(categoria1);
+        categorias.add(categoria1);
+        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra", "camisetaN17", "URLcamisetaN17", 25000D, ldt, usuario, ciudad, categorias);
         productoRepository.save(producto);
 
         Chat chat = new Chat(1, usuario, producto);

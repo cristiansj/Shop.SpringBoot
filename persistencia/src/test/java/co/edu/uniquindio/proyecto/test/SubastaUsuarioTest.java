@@ -1,9 +1,7 @@
 package co.edu.uniquindio.proyecto.test;
 
-import co.edu.uniquindio.proyecto.entidades.Chat;
-import co.edu.uniquindio.proyecto.entidades.SubastaUsuario;
-import co.edu.uniquindio.proyecto.repositorios.MensajeRepository;
-import co.edu.uniquindio.proyecto.repositorios.SubastaUsuarioRepository;
+import co.edu.uniquindio.proyecto.entidades.*;
+import co.edu.uniquindio.proyecto.repositorios.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @DataJpaTest
@@ -21,9 +21,53 @@ public class SubastaUsuarioTest {
     @Autowired
     private SubastaUsuarioRepository subastaUsuarioRepository;
 
+    @Autowired
+    private CiudadRepository ciudadRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
+
+    @Autowired
+    private SubastaRepository subastaRepository;
+
     @Test
     public void registrarTest(){
-        SubastaUsuario subastaUsuario = new SubastaUsuario(1,1542, LocalDateTime.now());
+
+        //Creo una subasta y la guardo.
+
+        Ciudad ciudad = new Ciudad(1, "Medallon");
+        ciudadRepository.save(ciudad);
+
+        HashMap<String, String> numTelefonos = new HashMap<String, String>();
+        numTelefonos.put("oficina","75435678");
+
+        Usuario usuario = new Usuario(1, "Pepe", "pepito123", "pepito123@gmail.com", "1245", ciudad, numTelefonos);
+        usuarioRepository.save(usuario);
+
+        LocalDateTime ldt = LocalDateTime.of(2022, 02, 10, 19, 59, 59);
+
+        Categoria categoria1 = new Categoria(1, "Ropa");
+        ArrayList<Categoria> categorias= new ArrayList<Categoria>();
+        categoriaRepository.save(categoria1);
+        categorias.add(categoria1);
+
+        Producto producto= new Producto(1, "Bicicleta BMX" , 20, "Bicicleta para BMX de la marca Evomo", "primera imagen", "URL de imagen 1",
+                750000.0, ldt, usuario, ciudad, categorias);
+
+        Producto guardado = productoRepository.save(producto);
+
+        ldt =  LocalDateTime.of(2021, 12, 12, 19, 15, 50);
+        Subasta subasta = new Subasta(1, ldt, producto);
+
+        Subasta guardada = subastaRepository.save(subasta);
+
+        SubastaUsuario subastaUsuario = new SubastaUsuario(1,1542, LocalDateTime.now(), subasta, usuario);
 
         SubastaUsuario subastaUsuarioG = subastaUsuarioRepository.save(subastaUsuario);
         Assertions.assertNotNull(subastaUsuarioG);
