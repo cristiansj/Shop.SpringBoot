@@ -4,7 +4,9 @@ import co.edu.uniquindio.proyecto.entidades.Chat;
 import co.edu.uniquindio.proyecto.entidades.Ciudad;
 import co.edu.uniquindio.proyecto.entidades.Mensaje;
 import co.edu.uniquindio.proyecto.repositorios.ChatRepository;
+import co.edu.uniquindio.proyecto.repositorios.CiudadRepository;
 import co.edu.uniquindio.proyecto.repositorios.MensajeRepository;
+import co.edu.uniquindio.proyecto.repositorios.UsuarioRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,24 @@ public class MensajeTest {
     @Autowired
     private MensajeRepository mensajeRepository;
 
+    @Autowired
+    private CiudadRepository ciudadRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private
+
+    @Autowired
+    private ChatRepository chatRepository;
+
     @Test
     public void registrarTest(){
-        Mensaje mensaje = new Mensaje(1,"hola mundo","cristian", LocalDateTime.now());
+
+        Chat chat = new Chat(1);
+
+        Mensaje mensaje = new Mensaje(1,"hola mundo","cristian", LocalDateTime.now(), 1);
 
         Mensaje mensajeG = mensajeRepository.save(mensaje);
         Assertions.assertNotNull(mensajeG);
