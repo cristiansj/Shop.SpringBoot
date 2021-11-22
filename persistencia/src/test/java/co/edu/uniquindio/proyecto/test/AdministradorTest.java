@@ -28,7 +28,10 @@ public class AdministradorTest {
      */
     @Test
     public void registrarTest(){
-        Administrador administrador = new Administrador(1,"Cristian","cristian@email.com","123");
+
+        HashMap<String, String> numTelefonos = new HashMap<String,String>();
+        numTelefonos.put("casa","3124325123");
+        Administrador administrador = new Administrador(1,"Cristian","cristian@email.com","123", numTelefonos);
 
         Administrador guardado = administradorRepository.save(administrador);
         Assertions.assertNotNull(guardado);

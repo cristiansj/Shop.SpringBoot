@@ -20,7 +20,6 @@ import java.util.Map;
 public class Persona implements Serializable {
     @Id
     @EqualsAndHashCode.Include
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
 
     @Column(nullable = false,length = 50)
@@ -34,13 +33,14 @@ public class Persona implements Serializable {
     @Column(nullable = false,length = 20)
     private String password;
 
-    @ElementCollection()
+    @ElementCollection
     private Map<String,String> numTelefonos = new HashMap<>();
 
-    public Persona(Integer codigo, String nombre, String email, String password) {
+    public Persona(Integer codigo, String nombre, String email, String password, HashMap<String,String> numTelefonos) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.email = email;
         this.password = password;
+        this.numTelefonos = numTelefonos;
     }
 }

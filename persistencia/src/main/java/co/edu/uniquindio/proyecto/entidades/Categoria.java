@@ -31,4 +31,5 @@ public class Categoria implements Serializable {
         this.codigo = codigo;
         this.nombre = nombre;
     }
+
 }

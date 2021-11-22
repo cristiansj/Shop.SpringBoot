@@ -27,10 +27,11 @@ public class ProductoTest {
     @Test
     public void registrarTest(){
         //Creo un producto y lo guardo.
-        Producto producto= new Producto(1, "Bicicleta BMX" , 20, "Bicicleta para BMX de la marca Evomo",
+        Producto producto= new Producto(1, "Bicicleta BMX" , 20, "Bicicleta para BMX de la marca Evomo", "primera imagen", "URL de imagen 1",
                                         750000.0, LocalDateTime.of(2022, 02, 10, 19, 59, 59));
 
         Producto guardado = productoRepository.save(producto);
+        System.out.println(guardado.toString());
         Assertions.assertNotNull(guardado);
     }
 

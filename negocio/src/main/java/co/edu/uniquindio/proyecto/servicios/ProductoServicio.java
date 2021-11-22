@@ -30,7 +30,10 @@ public interface ProductoServicio {
 
     List<Producto> listarProductosPorUsuario(Integer codigoUsuario) throws Exception;
 
+    void agregarProductoAlCarrito(Usuario usuario, Producto producto) throws Exception;
 
+    void removerProductoDelCarrito(Usuario usuario, Producto producto) throws Exception;
 
+    Integer sacarCalificaciónProducto(Producto producto)throws Exception;
 
 }

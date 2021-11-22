@@ -32,7 +32,7 @@ public class DetalleCompra implements Serializable {
     @ManyToOne
     private Producto codigoProducto;
 
-    public DetalleCompra(Integer codigo, Integer unidades, Double precioProducto) {
+    public DetalleCompra(Integer codigo, Integer unidades, Double precioProducto, Compra compra, Producto producto) {
         this.codigo = codigo;
         this.unidades = unidades;
         this.precioProducto = precioProducto;

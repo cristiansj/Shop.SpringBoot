@@ -5,6 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -22,6 +24,9 @@ public class Usuario extends Persona implements Serializable {
     @OneToMany
     private List<Producto> productosFavoritos;
 
+    @OneToMany
+    private List<Producto> carrito;
+
     @OneToMany(mappedBy = "usuarioComprador")
     private List<Chat> chat;
 
@@ -37,8 +42,8 @@ public class Usuario extends Persona implements Serializable {
     @OneToMany(mappedBy = "codigoUsuario")
     private List<Compra> compras;
 
-    public Usuario(Integer codigo, String nombre,String username, String email, String password, Ciudad ciudad) {
-        super(codigo, nombre, email, password);
+    public Usuario(Integer codigo, String nombre, String username, String email, String password, Ciudad ciudad, HashMap<String, String> numTelefonos) {
+        super(codigo, nombre, email, password, numTelefonos);
         this.username = username;
         this.ciudad = ciudad;
     }
