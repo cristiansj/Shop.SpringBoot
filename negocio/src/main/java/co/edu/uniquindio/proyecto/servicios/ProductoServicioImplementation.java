@@ -102,8 +102,6 @@ public class ProductoServicioImplementation implements ProductoServicio{
     @Override
     public void guardarProductoFavorito(Producto producto, Usuario usuario) throws Exception {
 
-        cd Desk
-
     }
 
     @Override
