@@ -1,25 +1,30 @@
 package co.edu.uniquindio.proyecto.servicios;
 
 import co.edu.uniquindio.proyecto.entidades.*;
+import co.edu.uniquindio.proyecto.repositorios.ComentarioRepository;
 import co.edu.uniquindio.proyecto.repositorios.ProductoRepository;
 import co.edu.uniquindio.proyecto.repositorios.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductoServicioImplementation implements ProductoServicio{
+public class ProductoServicioImplementation implements ProductoServicio {
 
     private final ProductoRepository productoRepository;
 
     private final UsuarioRepository usuarioRepository;
 
-    public ProductoServicioImplementation(ProductoRepository productoRepository, UsuarioRepository usuarioRepository) {
+    private final ComentarioRepository comentarioRepository;
+
+    public ProductoServicioImplementation(ProductoRepository productoRepository, UsuarioRepository usuarioRepository, ComentarioRepository comentarioRepository) {
         this.productoRepository = productoRepository;
         this.usuarioRepository = usuarioRepository;
+        this.comentarioRepository = comentarioRepository;
     }
 
     @Override
@@ -27,7 +32,7 @@ public class ProductoServicioImplementation implements ProductoServicio{
 
         try {
             return productoRepository.save(producto);
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
 
@@ -37,7 +42,7 @@ public class ProductoServicioImplementation implements ProductoServicio{
     public Producto actualizarProducto(Producto producto) throws Exception {
 
         Optional<Producto> buscado = productoRepository.findById(producto.getCodigo());
-        if (buscado.isEmpty()){
+        if (buscado.isEmpty()) {
             throw new Exception("El producto que se quiere actualizar no existe");
         }
 
@@ -57,7 +62,7 @@ public class ProductoServicioImplementation implements ProductoServicio{
     public void eliminarProducto(Integer codigo) throws Exception {
         Optional<Producto> producto = productoRepository.findById(codigo);
 
-        if (producto.isEmpty()){
+        if (producto.isEmpty()) {
             throw new Exception("No hay ningún producto asociado al código ingresado");
         }
 
@@ -76,7 +81,7 @@ public class ProductoServicioImplementation implements ProductoServicio{
     }
 
     @Override
-    public List<Producto> listarProductosPorCategoria(Categoria categoria){
+    public List<Producto> listarProductosPorCategoria(Categoria categoria) {
         return productoRepository.listarProductosPorCategoria(categoria);
     }
 
@@ -85,42 +90,190 @@ public class ProductoServicioImplementation implements ProductoServicio{
 
         Optional<Usuario> usuarioBuscado = usuarioRepository.findById(usuario.getCodigo());
 
-        if (usuarioBuscado.isEmpty()){
+        if (usuarioBuscado.isEmpty()) {
             throw new Exception("El usuario que quiere comentar el producto no existe");
         }
 
         Optional<Producto> productoBuscado = productoRepository.findById(producto.getCodigo());
 
-        if (productoBuscado.isEmpty()){
+        if (productoBuscado.isEmpty()) {
             throw new Exception("El producto que  se quiere comentar el no existe");
         }
 
-        Comentario cometario = new Comentario(1, "Increible producto", 5, LocalDateTime.now());
+        Comentario cometario = new Comentario(1, "Increible producto", 5, LocalDateTime.now(), producto, usuario);
 
+        comentarioRepository.save(cometario);
     }
 
     @Override
     public void guardarProductoFavorito(Producto producto, Usuario usuario) throws Exception {
+
+        Optional<Usuario> usuarioBuscado = usuarioRepository.findById(usuario.getCodigo());
+
+        if (usuarioBuscado.isEmpty()) {
+            throw new Exception("El usuario buscado no se encuentra registrado");
+        }
+
+        Optional<Producto> productoBuscado = productoRepository.findById(producto.getCodigo());
+        if (productoBuscado.isEmpty()){
+            throw new Exception("El producto ingresado no existe");
+        }
+
+        if (usuarioBuscado.get().getProductosFavoritos().contains(producto)) {
+            throw new Exception("El producto que se quiere añadir favoritos ya está en la lista de favoritos");
+        }
+
+        usuarioBuscado.get().getProductosFavoritos().add(producto);
 
     }
 
     @Override
     public void eliminarProductoFavorito(Producto producto, Usuario usuario) throws Exception {
 
+        Optional<Usuario> usuarioBuscado = usuarioRepository.findById(usuario.getCodigo());
+
+        if (usuarioBuscado.isEmpty()) {
+            throw new Exception("El usuario buscado no se encuentra registrado");
+        }
+
+        Optional<Producto> productoBuscado = productoRepository.findById(producto.getCodigo());
+        if (productoBuscado.isEmpty()){
+            throw new Exception("El producto ingresado no existe");
+        }
+
+        if (!usuarioBuscado.get().getProductosFavoritos().contains(producto)) {
+            throw new Exception("El producto que se quiere remover de favoritos no está en la lista de favoritos");
+        }
+
+        usuarioBuscado.get().getProductosFavoritos().remove(producto);
+
     }
 
     @Override
-    public void comprarProductos(Compra compra) throws Exception {
+    public void comprarProductos(Compra compra, Integer codigoUsuario) throws Exception {
+        int tamanio = compra.getDetallesCompras().size();
+        Optional<Usuario> usuario = usuarioRepository.findById(codigoUsuario);
+        for (int i = 0; i < tamanio; i++) {
+            usuario.get().getProductos().remove(compra.getDetallesCompras().get(i).getCodigoProducto());
+        }
+    }
+
+    @Override
+    public List<Producto> buscarProducto(String nombreProducto, String[] filtros) throws Exception {
+        List<Producto> productos = productoRepository.findByNombreContains(nombreProducto);
+        if (productos.isEmpty()) {
+            throw new Exception("El producto buscado no se encuentra registrado");
+        }
+        if (filtros[0] != "") {
+            for (int i = 0; i < productos.size(); i++) {
+                int tamanio = productos.get(i).getCategorias().size();
+                boolean bandera = true;
+                for (int j = 0; j < tamanio && bandera; j++) {
+                    if (productos.get(i).getCategorias().get(j).equals(filtros[0])) {
+                        bandera = false;
+                    }
+                }
+                if (bandera) {
+                    productos.remove(i);
+                }
+            }
+        }
+        if (filtros[1] != "") {
+            for (int i = 0; i < productos.size(); i++) {
+                if (!(productos.get(i).getPrecio() == Double.parseDouble(filtros[1]))) {
+                    productos.remove(i);
+                }
+            }
+        }
+        if (filtros[2] != "") {
+            for (int i = 0; i < productos.size(); i++) {
+                if (!(productos.get(i).getCodigoCiudad().getNombre().equals(filtros[2]))) {
+                    productos.remove(i);
+                }
+            }
+        }
+        if (filtros[3] != "") {
+            for (int i = 0; i < productos.size(); i++) {
+                Integer calificacionPromedio = 0;
+                for (int j = 0; j < productos.get(i).getComentarios().size(); j++) {
+                    calificacionPromedio = calificacionPromedio + productos.get(i).getComentarios().get(j).getCalificacion();
+                }
+                calificacionPromedio = calificacionPromedio / productos.get(i).getComentarios().size();
+                if (!(calificacionPromedio == Integer.parseInt(filtros[3]))) {
+                    productos.remove(i);
+                }
+            }
+        }
+        return productos;
+    }
+
+    @Override
+    public void agregarProductoAlCarrito(Usuario usuario, Producto producto) throws Exception {
+
+        Optional<Usuario> usuarioBuscado = usuarioRepository.findById(usuario.getCodigo());
+
+        if (usuarioBuscado.isEmpty()) {
+            throw new Exception("El usuario buscado no se encuentra registrado");
+        }
+
+        Optional<Producto> productoBuscado = productoRepository.findById(producto.getCodigo());
+        if (productoBuscado.isEmpty()){
+            throw new Exception("El producto ingresado no existe");
+        }
+
+        if (usuarioBuscado.get().getCarrito().contains(producto)) {
+            throw new Exception("El producto que se quiere agregar al carrito ya está en el carrito");
+        }
+
+        usuarioBuscado.get().getCarrito().add(producto);
 
     }
 
     @Override
-    public List<Producto> buscarProducto(String nombreProducto, String[] filtros) {
-        return null;
+    public void removerProductoDelCarrito(Usuario usuario, Producto producto) throws Exception {
+
+        Optional<Usuario> usuarioBuscado = usuarioRepository.findById(usuario.getCodigo());
+
+        if (usuarioBuscado.isEmpty()) {
+            throw new Exception("El usuario buscado no se encuentra registrado");
+        }
+
+        Optional<Producto> productoBuscado = productoRepository.findById(producto.getCodigo());
+        if (productoBuscado.isEmpty()){
+            throw new Exception("El producto ingresado no existe");
+        }
+
+        if (!usuarioBuscado.get().getCarrito().contains(producto)) {
+            throw new Exception("El producto que se quiere sacar del carrito no está en el carrito");
+        }
+
+        usuarioBuscado.get().getCarrito().remove(producto);
+
     }
+
+    @Override
+    public Integer sacarCalificaciónProducto(Producto producto) throws Exception {
+
+        Optional<Producto> productoBuscado = productoRepository.findById(producto.getCodigo());
+
+        if (productoBuscado.isEmpty()) {
+            throw new Exception("El producto buscado no se encuentra registrado");
+        }
+
+        return productoRepository.sacarCalificaciónPromedio(producto);
+
+    }
+
+
 
     @Override
     public List<Producto> listarProductosPorUsuario(Integer codigoUsuario) throws Exception {
-        return null;
+
+        return productoRepository.listarProductosDeUsuario(codigoUsuario);
+
     }
+
 }
+
+
+

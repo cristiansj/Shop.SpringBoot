@@ -31,9 +31,10 @@ public class Compra implements Serializable {
     @ToString.Exclude
     private List<DetalleCompra> detallesCompras;
 
-    public Compra(Integer codigo, LocalDateTime fechaCompra, String medioPago) {
+    public Compra(Integer codigo, LocalDateTime fechaCompra, String medioPago, Usuario usuario) {
         this.codigo = codigo;
         this.fechaCompra = fechaCompra;
         this.medioPago = medioPago;
+        this.codigoUsuario = usuario;
     }
 }

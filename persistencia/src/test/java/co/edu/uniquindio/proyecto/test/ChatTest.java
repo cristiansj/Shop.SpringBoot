@@ -1,8 +1,7 @@
 package co.edu.uniquindio.proyecto.test;
 
 import co.edu.uniquindio.proyecto.entidades.*;
-import co.edu.uniquindio.proyecto.repositorios.AdministradorRepository;
-import co.edu.uniquindio.proyecto.repositorios.ChatRepository;
+import co.edu.uniquindio.proyecto.repositorios.*;
 import org.assertj.core.internal.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @DataJpaTest
@@ -21,10 +22,39 @@ public class ChatTest {
     @Autowired
     private ChatRepository chatRepository;
 
+    @Autowired
+    private CiudadRepository ciudadRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
+
+    @Autowired
+    private  CategoriaRepository categoriaRepository;
+
     @Test
     public void registrarTest(){
 
-        Chat chat = new Chat(1);
+        Ciudad ciudad = new Ciudad(1, "Sanaa");
+        ciudadRepository.save(ciudad);
+
+        HashMap<String, String> numTelefonos = new HashMap<String, String>();
+        numTelefonos.put("Casa","3145324378");
+
+        Usuario usuario = new Usuario(1, "Pepe", "pepito123", "pepe123@gmail.com", "1423", ciudad, numTelefonos);
+        usuarioRepository.save(usuario);
+
+        LocalDateTime ldt = LocalDateTime.of(2022, 11, 12, 6, 15, 59);
+        Categoria categoria1 = new Categoria(1, "Ropa");
+        ArrayList<Categoria> categorias= new ArrayList<Categoria>();
+        categoriaRepository.save(categoria1);
+        categorias.add(categoria1);
+        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra", "camisetaN17", "URLcamisetaN17", 25000D, ldt, usuario, ciudad, categorias);
+        productoRepository.save(producto);
+
+        Chat chat = new Chat(1, usuario, producto);
 
         Chat chatG = chatRepository.save(chat);
         Assertions.assertNotNull(chatG);

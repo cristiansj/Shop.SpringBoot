@@ -32,9 +32,11 @@ public class SubastaUsuario implements Serializable {
     @ManyToOne
     private Usuario codigoUsuario;
 
-    public SubastaUsuario(Integer codigo, Integer valor, LocalDateTime fechaSubasta) {
+    public SubastaUsuario(Integer codigo, Integer valor, LocalDateTime fechaSubasta, Subasta subasta, Usuario usuario) {
         this.codigo = codigo;
         this.valor = valor;
         this.fechaSubasta = fechaSubasta;
+        this.codigoSubasta = subasta;
+        this.codigoUsuario = usuario;
     }
 }

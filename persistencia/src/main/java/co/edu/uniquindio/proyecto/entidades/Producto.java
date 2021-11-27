@@ -9,6 +9,8 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,10 +19,11 @@ import java.util.Map;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
+@ToString
 public class Producto implements Serializable {
+
     @Id
     @EqualsAndHashCode.Include
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
 
     @Column(nullable = false)
@@ -50,15 +53,16 @@ public class Producto implements Serializable {
     @ManyToOne
     private Ciudad codigoCiudad;
 
-    @ManyToMany(mappedBy = "productos")
+    @ManyToMany
     @ToString.Exclude
-    private List<Categoria> categorias;
+    private List<Categoria> categorias = new ArrayList<Categoria>();
 
     @ManyToOne
     private Colaboracion colaboracion;
 
     @ElementCollection
-    private Map<String,String> imagenes;
+    @ToString.Exclude
+    private Map<String,String> imagenes = new HashMap<String, String>();
 
     @OneToMany(mappedBy = "codigoProducto")
     @ToString.Exclude
@@ -77,11 +81,16 @@ public class Producto implements Serializable {
     private List<DetalleCompra> detalleCompras;
 
 
-    public Producto(Integer codigo, String nombre, Integer disponibilidad, String descripcion, Double precio, LocalDateTime fechaLimite) {
+    public Producto(Integer codigo, String nombre, Integer disponibilidad, String descripcion, String nomImagen, String imagen, Double precio, LocalDateTime fechaLimite, Usuario usuario, Ciudad ciudad, ArrayList<Categoria> categorias) {
+        this.codigo = codigo;
         this.nombre = nombre;
         this.disponibilidad = disponibilidad;
         this.descripcion = descripcion;
         this.precio = precio;
         this.fechaLimite = fechaLimite;
+        this.codigoCiudad = ciudad;
+        this.codigoVendedor = usuario;
+        this.categorias = categorias;
+        imagenes.put(nomImagen , imagen);
     }
 }

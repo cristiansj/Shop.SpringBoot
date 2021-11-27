@@ -22,7 +22,7 @@ public class Categoria implements Serializable {
     @Column(nullable = false,length = 50)
     private String nombre;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "categorias")
     @ToString.Exclude
     private List<Producto> productos;
 
@@ -31,4 +31,5 @@ public class Categoria implements Serializable {
         this.codigo = codigo;
         this.nombre = nombre;
     }
+
 }

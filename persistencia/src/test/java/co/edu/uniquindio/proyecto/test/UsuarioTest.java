@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.util.HashMap;
 import java.util.List;
 
 @DataJpaTest
@@ -29,7 +30,10 @@ public class UsuarioTest {
         Ciudad ciudad =  new Ciudad(1, "Armenia");
         ciudadRepository.save(ciudad);
 
-        Usuario usuario = new Usuario(1,"Tatiana","tati","tatiana@email.com","123", ciudadRepository.getById(1));
+        HashMap<String,String> numTelefonos = new HashMap<String,String>();
+        numTelefonos.put("casa","3142534897");
+
+        Usuario usuario = new Usuario(1,"Tatiana","tati","tatiana@email.com","123", ciudadRepository.getById(1), numTelefonos);
 
         Usuario usuarioG = usuarioRepository.save(usuario);
         Assertions.assertNotNull(usuarioG);

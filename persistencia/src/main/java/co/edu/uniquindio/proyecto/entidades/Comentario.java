@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -29,7 +30,8 @@ public class Comentario implements Serializable {
     @Column(nullable = false, columnDefinition ="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime fechaComentario;
 
-    @Positive
+
+    @PositiveOrZero
     private Integer calificacion;
 
     @ManyToOne
@@ -38,10 +40,12 @@ public class Comentario implements Serializable {
     @ManyToOne
     private Usuario codigoUsuario;
 
-    public Comentario(Integer codigo, String mensaje, Integer calificacion, LocalDateTime fechaComentario) {
+    public Comentario(Integer codigo, String mensaje, Integer calificacion, LocalDateTime fechaComentario, Producto producto, Usuario usuario) {
         this.codigo = codigo;
         this.mensaje = mensaje;
         this.calificacion = calificacion;
         this.fechaComentario = fechaComentario;
+        this.codigoProducto = producto;
+        this.codigoUsuario = usuario;
     }
 }

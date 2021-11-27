@@ -1,9 +1,7 @@
 package co.edu.uniquindio.proyecto.test;
 
-import co.edu.uniquindio.proyecto.entidades.DetalleCompra;
-import co.edu.uniquindio.proyecto.entidades.Producto;
-import co.edu.uniquindio.proyecto.repositorios.DetalleCompraRepository;
-import co.edu.uniquindio.proyecto.repositorios.ProductoRepository;
+import co.edu.uniquindio.proyecto.entidades.*;
+import co.edu.uniquindio.proyecto.repositorios.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @DataJpaTest
@@ -19,7 +19,16 @@ import java.util.List;
 public class ProductoTest {
 
     @Autowired
-    ProductoRepository productoRepository;
+    private ProductoRepository productoRepository;
+
+    @Autowired
+    private CiudadRepository ciudadRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
     /*
     Prueba para saber si los productos se están guardando bien en la base de datos.
@@ -27,10 +36,27 @@ public class ProductoTest {
     @Test
     public void registrarTest(){
         //Creo un producto y lo guardo.
-        Producto producto= new Producto(1, "Bicicleta BMX" , 20, "Bicicleta para BMX de la marca Evomo",
-                                        750000.0, LocalDateTime.of(2022, 02, 10, 19, 59, 59));
+        Ciudad ciudad = new Ciudad(1, "Medallon");
+        ciudadRepository.save(ciudad);
+
+        HashMap<String, String> numTelefonos = new HashMap<String, String>();
+        numTelefonos.put("oficina","75435678");
+
+        Usuario usuario = new Usuario(1, "Pepe", "pepito123", "pepito123@gmail.com", "1245", ciudad, numTelefonos);
+        usuarioRepository.save(usuario);
+
+        LocalDateTime ldt = LocalDateTime.of(2022, 02, 10, 19, 59, 59);
+
+        Categoria categoria1 = new Categoria(1, "Ropa");
+        ArrayList<Categoria> categorias= new ArrayList<Categoria>();
+        categoriaRepository.save(categoria1);
+        categorias.add(categoria1);
+
+        Producto producto= new Producto(1, "Bicicleta BMX" , 20, "Bicicleta para BMX de la marca Evomo", "primera imagen", "URL de imagen 1",
+                                        750000.0, ldt, usuario, ciudad, categorias);
 
         Producto guardado = productoRepository.save(producto);
+        System.out.println(guardado.toString());
         Assertions.assertNotNull(guardado);
     }
 

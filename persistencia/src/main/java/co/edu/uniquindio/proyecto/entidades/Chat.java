@@ -26,7 +26,11 @@ public class Chat implements Serializable {
     @ToString.Exclude
     private List<Mensaje> mensajes;
 
-    public Chat(Integer codigo) {
+    public Chat(Integer codigo, Usuario usuario, Producto producto) {
+
         this.codigo = codigo;
+        this.codigoProducto = producto;
+        this.usuarioComprador = usuario;
+
     }
 }
