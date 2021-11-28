@@ -10,7 +10,7 @@ public interface ProductoServicio {
 
     Producto actualizarProducto(Producto producto)throws Exception;
 
-    void eliminarProducto(Integer codigo)throws Exception;
+    Producto eliminarProducto(Integer codigo)throws Exception;
 
     Producto obtenerProducto(Integer codigo)throws Exception;
 
