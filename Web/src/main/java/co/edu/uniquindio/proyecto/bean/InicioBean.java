@@ -13,5 +13,10 @@ public class InicioBean implements Serializable {
 
     @Getter
     @Setter
-    private String mensaje = "mi primera encarta";
+    private String atributo1, atributo2;
+    public void cambiar() {
+        String aux = atributo1;
+        atributo1 = atributo2;
+        atributo2 = aux;
+    }
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Crear Usuario</title>
+</h:head>
+<h:body>
+    <p:panel header="Registar Usuario">
+        <h:form>
+        <h:panelGrid columns="2" cellpadding="5">
+
+            <p:outputLabel value="Código: " for="codigo_u"/>
+            <p:inputText id="codigo_u" value="#{usuarioBean.usuario.codigo}" required="true"/>
+            <p:outputLabel value="Nombre: " for="nombre_u"/>
+            <p:inputText id="nombre_u" value="#{usuarioBean.usuario.nombre}" required="true"/>
+            <p:outputLabel value="Email: " for="email_u"/>
+            <p:inputText id="email_u" value="#{usuarioBean.usuario.email}" required="true"/>
+            <p:outputLabel value="Nickname: " for="nickname_u"/>
+            <p:inputText id="nickname_u" value="#{usuarioBean.usuario.username}" required="true"/>
+            <p:outputLabel value="Contraseña: " for="contarsenia_u"/>
+            <p:password id="contarsenia_u" value="#{usuarioBean.usuario.password}" required="true"/>
+
+        </h:panelGrid>
+            <p:growl showDetail="true"/>
+            <p:commandButton value="Registar usuario" action="#{usuarioBean.registarUsuario}" update="@form" icon="pi pi-eye"/>
+    </h:form>
+    </p:panel>
+</h:body>
+</html>

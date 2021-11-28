@@ -10,12 +10,19 @@
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Pagina Web</title>
+    <title>Title</title>
 </h:head>
 <h:body>
-    <h:form name = "registro">
+    <h:form action="">
+        <h:panelGrid columns="2" cellpadding="5">
+            <p:outputLabel for="atrb1" value="Atributo 1: "/>
+            <p:inputText id="atrb1" value="#{inicioBean.atributo1}" required="true"/>
 
+            <p:outputLabel for="atrb2" value="Atributo 2: "/>
+            <p:inputText id="atrb2" value="#{inicioBean.atributo2}" required="true"/>
+
+        </h:panelGrid>
+        <p:commandButton value="Cambiar valores" action="#{inicioBean.cambiar}" update="@form"/>
     </h:form>
-    <h1>#{inicioBean.mensaje}</h1>
 </h:body>
 </html>
