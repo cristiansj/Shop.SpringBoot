@@ -21,6 +21,10 @@ public class ProductoServicioImplementation implements ProductoServicio {
 
     private final ComentarioRepository comentarioRepository;
 
+    public Producto buscarProductoPorCodigo(Integer codigoProducto) {
+        return productoRepository.findById(codigoProducto).get();
+    }
+
     public ProductoServicioImplementation(ProductoRepository productoRepository, UsuarioRepository usuarioRepository, ComentarioRepository comentarioRepository) {
         this.productoRepository = productoRepository;
         this.usuarioRepository = usuarioRepository;
@@ -59,7 +63,7 @@ public class ProductoServicioImplementation implements ProductoServicio {
     }
 
     @Override
-    public void eliminarProducto(Integer codigo) throws Exception {
+    public Producto eliminarProducto(Integer codigo) throws Exception {
         Optional<Producto> producto = productoRepository.findById(codigo);
 
         if (producto.isEmpty()) {
@@ -67,7 +71,7 @@ public class ProductoServicioImplementation implements ProductoServicio {
         }
 
         productoRepository.deleteById(codigo);
-
+        return producto.get();
     }
 
     @Override
