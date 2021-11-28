@@ -9,6 +9,7 @@
         <module>web</module>
         <module>web</module>
         <module>web</module>
+        <module>Web</module>
     </modules>
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
