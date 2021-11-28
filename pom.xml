@@ -6,6 +6,7 @@
     <modules>
         <module>persistencia</module>
         <module>Negocio</module>
+        <module>web</module>
     </modules>
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
