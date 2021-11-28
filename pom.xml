@@ -8,6 +8,7 @@
         <module>Negocio</module>
         <module>web</module>
         <module>web</module>
+        <module>web</module>
     </modules>
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
