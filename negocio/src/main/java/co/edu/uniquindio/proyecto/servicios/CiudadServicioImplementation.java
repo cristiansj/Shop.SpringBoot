@@ -13,6 +13,7 @@ public class CiudadServicioImplementation implements CiudadServicio{
 
     @Override
     public Ciudad registrarCiudad(Ciudad city) throws Exception {
+        int i;
         return ciudadRepository.save(city);
     }
 
