@@ -11,7 +11,7 @@
 
     <artifactId>web</artifactId>
     <name>Proyecto web</name>
-    <description>Proyecto que contiene la interfaz gráfica de usuario (GUI) web para los clientes</description>
+    <description>Proyecto que contiene la interfaz grafica de usuario (GUI) web para los clientes</description>
 
     <properties>
         <joinfaces.version>4.4.3</joinfaces.version>
@@ -54,5 +54,4 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
 </project>
