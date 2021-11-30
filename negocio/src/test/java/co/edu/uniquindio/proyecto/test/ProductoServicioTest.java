@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @SpringBootTest(classes = NegocioApplication.class)
 @Transactional
@@ -75,6 +76,16 @@ public class ProductoServicioTest {
             Producto productoPublicado = productoServicioImplementation.publicarProducto(producto);
             Assertions.assertNotNull(productoPublicado);
         }catch (Exception e){
+
+        }
+    }
+
+    @Test
+    public void listarProductosTest() {
+        try {
+            List<Producto> productos = productoServicioImplementation.listarProductos();
+            Assertions.assertNotNull(productos);
+        } catch (Exception e) {
 
         }
     }

@@ -44,7 +44,7 @@ public class Producto implements Serializable {
     @Column(nullable = false)
     private LocalDateTime fechaLimite;
 
-    @Positive
+    @PositiveOrZero
     private Float descuento;
 
     @ManyToOne

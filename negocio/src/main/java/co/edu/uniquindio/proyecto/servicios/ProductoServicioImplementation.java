@@ -84,6 +84,7 @@ public class ProductoServicioImplementation implements ProductoServicio {
         return productoRepository.findAll();
     }
 
+    //voy aquí
     @Override
     public List<Producto> listarProductosPorCategoria(Categoria categoria) {
         return productoRepository.listarProductosPorCategoria(categoria);
@@ -154,10 +155,10 @@ public class ProductoServicioImplementation implements ProductoServicio {
     }
 
     @Override
-    public void comprarProductos(Compra compra, Integer codigoUsuario) throws Exception {
+    public void comprarProductos(Compra compra) throws Exception {
         int tamanio = compra.getDetallesCompras().size();
-        Optional<Usuario> usuario = usuarioRepository.findById(codigoUsuario);
         for (int i = 0; i < tamanio; i++) {
+            Optional<Usuario> usuario = usuarioRepository.findById(compra.getDetallesCompras().get(i).getCodigoProducto().getCodigoVendedor().getCodigo());
             usuario.get().getProductos().remove(compra.getDetallesCompras().get(i).getCodigoProducto());
         }
     }
