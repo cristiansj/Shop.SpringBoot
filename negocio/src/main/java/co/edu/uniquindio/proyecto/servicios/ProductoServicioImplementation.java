@@ -167,45 +167,43 @@ public class ProductoServicioImplementation implements ProductoServicio {
     public List<Producto> buscarProducto(String nombreProducto, String[] filtros) throws Exception {
         List<Producto> productos = productoRepository.findByNombreContains(nombreProducto);
         if (productos.isEmpty()) {
-            throw new Exception("El producto buscado no se encuentra registrado");
+            throw new Exception("No hemos encontrado coincidencias");
         }
-        if (filtros[0] != "") {
-            for (int i = 0; i < productos.size(); i++) {
-                int tamanio = productos.get(i).getCategorias().size();
-                boolean bandera = true;
-                for (int j = 0; j < tamanio && bandera; j++) {
-                    if (productos.get(i).getCategorias().get(j).equals(filtros[0])) {
-                        bandera = false;
+        if (filtros != null) {
+            if (filtros[0] != "") {
+                for (int i = 0; i < productos.size(); i++) {
+                    int tamanio = productos.get(i).getCategorias().size();
+                    boolean bandera = true;
+                    for (int j = 0; j < tamanio && bandera; j++) {
+                        if (productos.get(i).getCategorias().get(j).equals(filtros[0])) {
+                            bandera = false;
+                        }
+                    }
+                    if (bandera) {
+                        productos.remove(i);
                     }
                 }
-                if (bandera) {
-                    productos.remove(i);
+            }
+            if (filtros[1] != "") {
+                for (int i = 0; i < productos.size(); i++) {
+                    if (!(productos.get(i).getPrecio() == Double.parseDouble(filtros[1]))) {
+                        productos.remove(i);
+                    }
                 }
             }
-        }
-        if (filtros[1] != "") {
-            for (int i = 0; i < productos.size(); i++) {
-                if (!(productos.get(i).getPrecio() == Double.parseDouble(filtros[1]))) {
-                    productos.remove(i);
+            if (filtros[2] != "") {
+                for (int i = 0; i < productos.size(); i++) {
+                    if (!(productos.get(i).getCodigoCiudad().getNombre().equals(filtros[2]))) {
+                        productos.remove(i);
+                    }
                 }
             }
-        }
-        if (filtros[2] != "") {
-            for (int i = 0; i < productos.size(); i++) {
-                if (!(productos.get(i).getCodigoCiudad().getNombre().equals(filtros[2]))) {
-                    productos.remove(i);
-                }
-            }
-        }
-        if (filtros[3] != "") {
-            for (int i = 0; i < productos.size(); i++) {
-                Integer calificacionPromedio = 0;
-                for (int j = 0; j < productos.get(i).getComentarios().size(); j++) {
-                    calificacionPromedio = calificacionPromedio + productos.get(i).getComentarios().get(j).getCalificacion();
-                }
-                calificacionPromedio = calificacionPromedio / productos.get(i).getComentarios().size();
-                if (!(calificacionPromedio == Integer.parseInt(filtros[3]))) {
-                    productos.remove(i);
+            if (filtros[3] != "") {
+                for (int i = 0; i < productos.size(); i++) {
+                    Integer calificacionPromedio = productoRepository.sacarCalificaciónPromedio(productos.get(i));
+                    if (!(calificacionPromedio == Integer.parseInt(filtros[3]))) {
+                        productos.remove(i);
+                    }
                 }
             }
         }
