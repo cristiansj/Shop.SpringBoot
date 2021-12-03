@@ -80,6 +80,12 @@ public class Producto implements Serializable {
     @ToString.Exclude
     private List<DetalleCompra> detalleCompras;
 
+    public String getImagenPrincipal() {
+        if (imagenes != null && !imagenes.isEmpty()) {
+            return imagenes.get(0);
+        }
+        return "producto.png";
+    }
 
     public Producto(Integer codigo, String nombre, Integer disponibilidad, String descripcion, List<String> imagenes, Double precio, LocalDateTime fechaLimite, Usuario usuario, Ciudad ciudad, ArrayList<Categoria> categorias) {
         this.codigo = codigo;

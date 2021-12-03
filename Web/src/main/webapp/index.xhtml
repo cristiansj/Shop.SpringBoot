@@ -10,14 +10,12 @@
 <h:head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Pagina Web</title>
+    <title>Unishop</title>
     <h:outputStylesheet library="css" name="bootstrap.min.css"/>
     <h:outputStylesheet library="css" name="styles.css"/>
     <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
 </h:head>
 <h:body>
-    <div class="cajon"/>
-    <div class="cajon"/>
     <div id="header">
         <header>
             <div class="px-3 py-2 bg-dark text-white">
@@ -62,10 +60,51 @@
                 </div>
             </div>
         </header>
-
     </div>
     <div id="content">
+        <div class="container">
+            <h1>Lista de productos</h1>
+            <h:form>
+                <p:dataView value="#{inicioBean.productos}" paginator="true" rows="3" var="producto" gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 
+                    <p:dataViewGridItem>
+                        <div class="card">
+                            <img src="/uploads/#{producto.imagenPrincipal}" class="card-img-top" alt="..."/>
+                            <div class="card-body">
+                                <h5 class="card-title">#{producto.nombre}</h5>
+                                <p class="card-text">#{producto.precio}</p>
+                                <hr />
+                                <p:commandButton value="Ver Detalle" styleClass="ui-button-raised" icon="pi pi-arrow-right" iconPos="right" action="#{inicioBean.irADetalle(producto.codigo)}"/>
+                            </div>
+                        </div>
+                    </p:dataViewGridItem>
+
+                    <p:dataViewListItem>
+                        <div class="row d-flex item-pro">
+                            <div class="col-lg-2 col-md-1" style="text-align: center">
+                                <p:graphicImage url="/uploads/#{producto.imagenPrincipal}" styleClass="imagen-producto"/>
+                            </div>
+                            <div class="col-lg-8 col-md-1 align-self-center">
+                                <p:outputPanel>
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <h:outputText value="Nombre: "/>
+                                        <h:outputText value="#{producto.nombre}" style="font-weight: bold"/>
+                                        <h:outputText value="Precio: "/>
+                                        <h:outputText value="#{producto.precio}"/>
+                                        <h:outputText value="Categorias: "/>
+                                        <h:outputText value="#{producto.categorias}"/>
+                                    </h:panelGrid>
+                                </p:outputPanel>
+                            </div>
+                            <div class="col-lg-2 col-md-1 align-self-center">
+                                <p:commandButton value="Ver Detalle" styleClass="ui-button-raised" icon="pi pi-arrow-right" iconPos="right" action="#{inicioBean.irADetalle(producto.codigo)}"/>
+                            </div>
+                        </div>
+                    </p:dataViewListItem>
+
+                </p:dataView>
+            </h:form>
+        </div>
     </div>
 </h:body>
 </html>

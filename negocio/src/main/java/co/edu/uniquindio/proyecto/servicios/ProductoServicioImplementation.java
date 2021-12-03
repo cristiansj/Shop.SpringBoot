@@ -93,23 +93,11 @@ public class ProductoServicioImplementation implements ProductoServicio {
     }
 
     @Override
-    public void comentarProducto(String mensaje, Integer calificacion, Usuario usuario, Producto producto) throws Exception {
-
-        Optional<Usuario> usuarioBuscado = usuarioRepository.findById(usuario.getCodigo());
-
-        if (usuarioBuscado.isEmpty()) {
-            throw new Exception("El usuario que quiere comentar el producto no existe");
+    public void comentarProducto(Comentario comentario) throws Exception {
+        comentario.setFechaComentario(LocalDateTime.now());
+        if (comentario != null) {
+            comentarioRepository.save(comentario);
         }
-
-        Optional<Producto> productoBuscado = productoRepository.findById(producto.getCodigo());
-
-        if (productoBuscado.isEmpty()) {
-            throw new Exception("El producto que  se quiere comentar el no existe");
-        }
-
-        Comentario cometario = new Comentario(1, "Increible producto", 5, LocalDateTime.now(), producto, usuario);
-
-        comentarioRepository.save(cometario);
     }
 
     @Override
