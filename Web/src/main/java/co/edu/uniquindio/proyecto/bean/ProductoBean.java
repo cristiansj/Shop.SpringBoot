@@ -1,7 +1,11 @@
 package co.edu.uniquindio.proyecto.bean;
 
+import co.edu.uniquindio.proyecto.entidades.Categoria;
+import co.edu.uniquindio.proyecto.entidades.Ciudad;
 import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
+import co.edu.uniquindio.proyecto.servicios.CategoriaServicio;
+import co.edu.uniquindio.proyecto.servicios.CiudadServicio;
 import co.edu.uniquindio.proyecto.servicios.ProductoServicio;
 import co.edu.uniquindio.proyecto.servicios.UsuarioServicio;
 import lombok.Getter;
@@ -21,6 +25,7 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Component
 @ViewScoped
@@ -29,8 +34,20 @@ public class ProductoBean implements Serializable {
     @Getter @Setter
     private Producto producto;
 
+    @Getter @Setter
+    private List<Categoria> categorias;
+
+    @Getter @Setter
+    private List<Ciudad> ciudades;
+
+    @Autowired
+    private CategoriaServicio categoriaServicio;
+
     @Autowired
     private ProductoServicio productoServicio;
+
+    @Autowired
+    private CiudadServicio ciudadServicio;
 
     @Autowired
     private UsuarioServicio usuarioServicio;
@@ -44,17 +61,18 @@ public class ProductoBean implements Serializable {
     public void inicializar(){
         this.producto = new Producto();
         this.imagenes = new ArrayList<>();
+        this.categorias = categoriaServicio.listarCategoria();
+        this.ciudades = ciudadServicio.listarCiudad();
     }
 
     public void crearProducto() {
         try {
             if (!imagenes.isEmpty()) {
                 //Se esta quemando un dato, quitar cuando se implemente los login
-                Usuario usuario = usuarioServicio.obtenerUsuario(123);
+                Usuario usuario = usuarioServicio.obtenerUsuario(1);
                 producto.setCodigoVendedor(usuario);
-                HashMap<String, String> mapaImagenes = new HashMap<>();
-                mapaImagenes.put("jijijaja","me muero de risa");
-                producto.setImagenes(mapaImagenes);
+                producto.setImagenes(imagenes);
+                producto.setFechaLimite(LocalDateTime.now().plusMonths(1));
                 productoServicio.publicarProducto(producto);
                 FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"Alerta", "Producto creado exitosamente");
                 FacesContext.getCurrentInstance().addMessage(null,msg);

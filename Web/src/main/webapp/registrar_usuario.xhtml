@@ -28,6 +28,12 @@
             <p:outputLabel value="Contraseña: " for="contarsenia_u"/>
             <p:password id="contarsenia_u" value="#{usuarioBean.usuario.password}" required="true"/>
 
+            <p:outputLabel value="ciudad" for="ciudad_u"/>
+            <p:selectOneMenu id="ciudad_u" value="#{usuarioBean.usuario.ciudad}" converter="#{ciudadConverter}">
+                <f:selectItem itemLabel="Seleccionar una ciudad" noSelectionOption="true"/>
+                <f:selectItems value="#{usuarioBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}"/>
+            </p:selectOneMenu>
+
         </h:panelGrid>
             <p:growl showDetail="true"/>
             <p:commandButton value="Registar usuario" action="#{usuarioBean.registarUsuario}" update="@form" icon="pi pi-eye"/>

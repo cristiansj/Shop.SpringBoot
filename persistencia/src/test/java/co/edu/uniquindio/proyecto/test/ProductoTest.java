@@ -52,8 +52,8 @@ public class ProductoTest {
         categoriaRepository.save(categoria1);
         categorias.add(categoria1);
 
-        Producto producto= new Producto(1, "Bicicleta BMX" , 20, "Bicicleta para BMX de la marca Evomo", "primera imagen", "URL de imagen 1",
-                                        750000.0, ldt, usuario, ciudad, categorias);
+        ArrayList<String> imagenes = new ArrayList<String>();
+        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
 
         Producto guardado = productoRepository.save(producto);
         System.out.println(guardado.toString());

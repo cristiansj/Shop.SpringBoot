@@ -32,14 +32,22 @@
                 <p:outputLabel value="Descuento: " for="descuento_u"/>
                 <p:inputText id="descuento_u" value="#{productoBean.producto.descuento}" required="true" type="number"/>
 
-                <p:outputLabel value="Fecha: " for="fecha_u"/>
-                <p:datePicker id="fecha_u" value="#{productoBean.producto.fechaLimite}" required="true"/>
+                <p:outputLabel value="categorias" for="categorias_p"/>
+                <p:selectManyMenu id="categorias_p" value="#{productoBean.producto.categorias}" converter="#{categoriaConverter}" showCheckbox="true" required="true">
+                    <f:selectItems value="#{productoBean.categorias}" var="categoria" itemLabel="#{categoria.nombre}"/>
+                </p:selectManyMenu>
+
+                <p:outputLabel value="ciudad" for="ciudad_p"/>
+                <p:selectOneMenu id="ciudad_p" value="#{productoBean.producto.codigoCiudad}" converter="#{ciudadConverter}">
+                    <f:selectItem itemLabel="Seleccionar una ciudad" noSelectionOption="true"/>
+                    <f:selectItems value="#{productoBean.ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}"/>
+                </p:selectOneMenu>
 
                 <p:outputLabel value="Imágenes" for="imagen_p"/>
                 <p:fileUpload id="imagen_p" listener="#{productoBean.subirImagenes}" mode="advanced" multiple="true" sizeLimit="1000000" fileLimit="5" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" required="true" />
 
-                <p:outputLabel value="Descripción: " for="descripcion_u"/>
-                <p:textEditor id="descripcion_u" value="#{productoBean.producto.descripcion}" height="300" secure="false"/>
+                <p:outputLabel value="Descripción: " for="descripcion_p"/>
+                <p:textEditor id="descripcion_p" value="#{productoBean.producto.descripcion}" height="300" secure="false"/>
 
             </h:panelGrid>
             <p:growl showDetail="true"/>

@@ -54,7 +54,8 @@ public class MensajeTest {
         ArrayList<Categoria> categorias= new ArrayList<Categoria>();
         categoriaRepository.save(categoria1);
         categorias.add(categoria1);
-        Producto producto = new Producto(1, "Camiseta", 22,  "Camiseta blanca grande", "CamisetaBlancaN32", "URLCamisetaBlancaN32", 35000D, ldt, usuario, ciudad, categorias);
+        ArrayList<String> imagenes = new ArrayList<String>();
+        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
         productoRepository.save(producto);
 
         Chat chat = new Chat(1, usuario, producto);

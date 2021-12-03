@@ -42,7 +42,9 @@ public class ProductoServicioTest {
         ArrayList<Categoria> categorias = new ArrayList<>();
         categorias.add(new Categoria(1,"deportivo"));
         Usuario usuario = new Usuario(123,"Cristian","cristian20","cristian@gmail.com","123",ciudad,telefonos);
-        Producto producto = new Producto(123,"camisa",10,"camisa buena","camisa","hahshhsa",1235.0, LocalDateTime.now(),usuario,ciudad,categorias);
+        ArrayList<String> imagenes = new ArrayList<String>();
+        LocalDateTime ldt = LocalDateTime.of(2022,11,30,12,59,03);
+        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
         try {
             Producto productoPublicado = productoServicioImplementation.actualizarProducto(producto);
             Assertions.assertNotNull(productoPublicado);
@@ -59,7 +61,9 @@ public class ProductoServicioTest {
         ArrayList<Categoria> categorias = new ArrayList<>();
         categorias.add(new Categoria(1,"deportivo"));
         Usuario usuario = new Usuario(123,"Cristian","cristian20","cristian@gmail.com","123",ciudad,telefonos);
-        Producto producto = new Producto(123,"camisa",10,"camisa buena","camisa","hahshhsa",1235.0, LocalDateTime.now(),usuario,ciudad,categorias);
+        LocalDateTime ldt = LocalDateTime.of(2022,11,30,12,59,03);
+        ArrayList<String> imagenes = new ArrayList<String>();
+        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
         try {
             productoServicioImplementation.eliminarProducto(producto.getCodigo());
             Producto productoBuscado = productoServicioImplementation.buscarProductoPorCodigo(producto.getCodigo());

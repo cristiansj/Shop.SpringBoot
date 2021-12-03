@@ -62,7 +62,7 @@ public class Producto implements Serializable {
 
     @ElementCollection
     @ToString.Exclude
-    private Map<String,String> imagenes = new HashMap<String, String>();
+    private List<String> imagenes = new ArrayList<String>();
 
     @OneToMany(mappedBy = "codigoProducto")
     @ToString.Exclude
@@ -81,7 +81,7 @@ public class Producto implements Serializable {
     private List<DetalleCompra> detalleCompras;
 
 
-    public Producto(Integer codigo, String nombre, Integer disponibilidad, String descripcion, String nomImagen, String imagen, Double precio, LocalDateTime fechaLimite, Usuario usuario, Ciudad ciudad, ArrayList<Categoria> categorias) {
+    public Producto(Integer codigo, String nombre, Integer disponibilidad, String descripcion, List<String> imagenes, Double precio, LocalDateTime fechaLimite, Usuario usuario, Ciudad ciudad, ArrayList<Categoria> categorias) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.disponibilidad = disponibilidad;
@@ -91,6 +91,6 @@ public class Producto implements Serializable {
         this.codigoCiudad = ciudad;
         this.codigoVendedor = usuario;
         this.categorias = categorias;
-        imagenes.put(nomImagen , imagen);
+        this.imagenes = imagenes;
     }
 }

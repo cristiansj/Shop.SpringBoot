@@ -5,6 +5,8 @@ import co.edu.uniquindio.proyecto.repositorios.CiudadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CiudadServicioImplementation implements CiudadServicio{
 
@@ -19,6 +21,11 @@ public class CiudadServicioImplementation implements CiudadServicio{
 
     @Override
     public Ciudad obtenerPorID(Integer codigo) throws Exception {
-        return ciudadRepository.getById(codigo);
+        return ciudadRepository.findById(codigo).orElseThrow( () -> new Exception("El id no pertenece a ninguna ciudad"));
+    }
+
+    @Override
+    public List<Ciudad> listarCiudad() {
+        return ciudadRepository.findAll();
     }
 }

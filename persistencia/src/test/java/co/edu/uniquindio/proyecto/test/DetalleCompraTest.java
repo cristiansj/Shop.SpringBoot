@@ -57,7 +57,8 @@ public class DetalleCompraTest {
         ArrayList<Categoria> categorias= new ArrayList<Categoria>();
         categoriaRepository.save(categoria1);
         categorias.add(categoria1);
-        Producto producto = new Producto(1, "Camiseta", 15, "Camiseta blanca", "CamisetaB12", "URLCamisetaB12", 34000D, ldt, usuario, ciudad, categorias);
+        ArrayList<String> imagenes = new ArrayList<String>();
+        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
         productoRepository.save(producto);
 
         LocalDateTime ldt2 = LocalDateTime.now();

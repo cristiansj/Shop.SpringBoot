@@ -52,7 +52,8 @@ public class ComentarioTest {
         ArrayList<Categoria> categorias= new ArrayList<Categoria>();
         categoriaRepository.save(categoria1);
         categorias.add(categoria1);
-        Producto producto = new Producto(5, "Camiseta AC/DC", 10, "Increible camiseta negra con logo de AC/DC", "camiseta", "urlCamisetaACDC", 70000D, ldt, usuario, ciudad, categorias);
+        ArrayList<String> imagenes = new ArrayList<String>();
+        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
         productoRepository.save(producto);
         //Creo un comentario y lo guardo.
         Comentario comentario = new Comentario(1,"Me gusta mucho el producto", 4, LocalDateTime.now(), producto, usuario);

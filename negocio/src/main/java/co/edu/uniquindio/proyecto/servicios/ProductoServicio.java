@@ -36,4 +36,7 @@ public interface ProductoServicio {
 
     Integer sacarCalificaciónProducto(Producto producto)throws Exception;
 
+    List<Categoria> listarCategoria();
+
+    Categoria obtenerCategoria(String categoria) throws Exception;
 }

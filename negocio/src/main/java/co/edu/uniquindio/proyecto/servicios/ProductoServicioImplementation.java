@@ -1,14 +1,13 @@
 package co.edu.uniquindio.proyecto.servicios;
 
 import co.edu.uniquindio.proyecto.entidades.*;
+import co.edu.uniquindio.proyecto.repositorios.CategoriaRepository;
 import co.edu.uniquindio.proyecto.repositorios.ComentarioRepository;
 import co.edu.uniquindio.proyecto.repositorios.ProductoRepository;
 import co.edu.uniquindio.proyecto.repositorios.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +15,8 @@ import java.util.Optional;
 public class ProductoServicioImplementation implements ProductoServicio {
 
     private final ProductoRepository productoRepository;
+
+    private final CategoriaRepository categoriaRepository;
 
     private final UsuarioRepository usuarioRepository;
 
@@ -25,8 +26,9 @@ public class ProductoServicioImplementation implements ProductoServicio {
         return productoRepository.findById(codigoProducto).get();
     }
 
-    public ProductoServicioImplementation(ProductoRepository productoRepository, UsuarioRepository usuarioRepository, ComentarioRepository comentarioRepository) {
+    public ProductoServicioImplementation(ProductoRepository productoRepository, CategoriaRepository categoriaRepository, UsuarioRepository usuarioRepository, ComentarioRepository comentarioRepository) {
         this.productoRepository = productoRepository;
+        this.categoriaRepository = categoriaRepository;
         this.usuarioRepository = usuarioRepository;
         this.comentarioRepository = comentarioRepository;
     }
@@ -267,13 +269,19 @@ public class ProductoServicioImplementation implements ProductoServicio {
 
     }
 
+    @Override
+    public List<Categoria> listarCategoria() {
+        return categoriaRepository.findAll();
+    }
 
+    @Override
+    public Categoria obtenerCategoria(String categoria) throws Exception {
+        return categoriaRepository.findByNombreContains(categoria);
+    }
 
     @Override
     public List<Producto> listarProductosPorUsuario(Integer codigoUsuario) throws Exception {
-
         return productoRepository.listarProductosDeUsuario(codigoUsuario);
-
     }
 
 }
