@@ -35,6 +35,9 @@
                 <p:outputLabel value="Fecha: " for="fecha_u"/>
                 <p:datePicker id="fecha_u" value="#{productoBean.producto.fechaLimite}" required="true"/>
 
+                <p:outputLabel value="Imágenes" for="imagen_p"/>
+                <p:fileUpload id="imagen_p" listener="#{productoBean.subirImagenes}" mode="advanced" multiple="true" sizeLimit="1000000" fileLimit="5" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" required="true" />
+
                 <p:outputLabel value="Descripción: " for="descripcion_u"/>
                 <p:textEditor id="descripcion_u" value="#{productoBean.producto.descripcion}" height="300" secure="false"/>
 
