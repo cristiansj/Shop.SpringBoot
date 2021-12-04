@@ -30,7 +30,7 @@ public class Producto implements Serializable {
     private String nombre;
 
     @Column(nullable = false)
-    @PositiveOrZero
+    @Positive
     private Integer disponibilidad;
 
     @Column(length = 250)

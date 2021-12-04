@@ -26,9 +26,9 @@
                         <p:rating value="#{detalleProductoBean.calificacionPromedio}" readonly="true"/>
                         <h1 class="mt-4">#{detalleProductoBean.producto.nombre}</h1>
                         <h1 class="mt-4">#{detalleProductoBean.producto.precio}</h1>
-                        <h:form class="mt-4">
-                            <p:commandButton value="Añadir al carrito" icon="pi pi-shopping-cart" update="@form"/>
-                            <p:growl for="add-cart" showDetail="true"/>
+                        <h:form class="mt-4" rendered="#{seguridadBean.autenticado}">
+                            <p:commandButton value="Añadir al carrito" icon="pi pi-shopping-cart" update="@form" action="#{seguridadBean.agregarAlCarrito(detalleProductoBean.producto.codigo, detalleProductoBean.producto.precio, detalleProductoBean.producto.nombre, detalleProductoBean.producto.imagenPrincipal)}"/>
+                            <p:growl for="msj-bean" showDetail="true"/>
                         </h:form>
                     </div>
                     <div class="box"><p>Ciudad: #{detalleProductoBean.producto.codigoCiudad.nombre}</p></div>
@@ -42,7 +42,7 @@
         <p:panel header="Descripción" styleClass="mt-3">
             <h:outputText value="#{detalleProductoBean.producto.descripcion}" escape="false"/>
         </p:panel>
-        <p:panel header="Hacer un comentario" styleClass="mt-3" >
+        <p:panel header="Hacer un comentario" styleClass="mt-3" rendered="#{seguridadBean.autenticado}">
             <h:form id="crear-comentario">
                 <h:panelGrid columns="2" cellpadding="3">
                     <p:inputTextarea value="#{detalleProductoBean.nuevoComentario.mensaje}" rendered="true" styleClass="comentario-usuario"/>

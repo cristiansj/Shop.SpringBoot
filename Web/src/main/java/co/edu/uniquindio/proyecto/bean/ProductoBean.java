@@ -46,6 +46,9 @@ public class ProductoBean implements Serializable {
     @Autowired
     private ProductoServicio productoServicio;
 
+    @Value("#{seguridadBean.usuarioSesion}")
+    private Usuario usuarioSesion;
+
     @Autowired
     private CiudadServicio ciudadServicio;
 
@@ -67,10 +70,8 @@ public class ProductoBean implements Serializable {
 
     public void crearProducto() {
         try {
-            if (!imagenes.isEmpty()) {
-                //Se esta quemando un dato, quitar cuando se implemente los login
-                Usuario usuario = usuarioServicio.obtenerUsuario(1);
-                producto.setCodigoVendedor(usuario);
+            if (!imagenes.isEmpty() && usuarioSesion != null) {
+                producto.setCodigoVendedor(usuarioSesion);
                 producto.setImagenes(imagenes);
                 producto.setFechaLimite(LocalDateTime.now().plusMonths(1));
                 productoServicio.publicarProducto(producto);

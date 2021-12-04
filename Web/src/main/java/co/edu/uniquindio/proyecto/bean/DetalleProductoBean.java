@@ -39,6 +39,9 @@ public class DetalleProductoBean implements Serializable {
     @Getter @Setter
     private Comentario nuevoComentario;
 
+    @Value("#{seguridadBean.usuarioSesion}")
+    private Usuario usuarioSesion;
+
     @Getter @Setter
     private List<Comentario> comentarios;
 
@@ -58,11 +61,13 @@ public class DetalleProductoBean implements Serializable {
 
     public void crearComentario(){
         try {
-            nuevoComentario.setCodigoProducto(producto);
-            nuevoComentario.setCodigoUsuario(usuarioServicio.obtenerUsuario(1));
-            productoServicio.comentarProducto(nuevoComentario);
-            this.comentarios.add(nuevoComentario);
-            nuevoComentario = new Comentario();
+            if (usuarioSesion != null) {
+                nuevoComentario.setCodigoProducto(producto);
+                nuevoComentario.setCodigoUsuario(usuarioSesion);
+                productoServicio.comentarProducto(nuevoComentario);
+                this.comentarios.add(nuevoComentario);
+                nuevoComentario = new Comentario();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

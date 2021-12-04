@@ -29,37 +29,43 @@
 
                     <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small" style="text-align: center">
                         <li>
-                            <a href="index.xhtml" class="nav-link text-white">
+                            <a href="/index.xhtml" class="nav-link text-white">
                                 <i class="pi pi-home bi d-block mx-auto mb-1 icon-menu"/>
                                 Home
                             </a>
                         </li>
                         <li>
-                            <a href="perfil.xhtml" class="nav-link text-white">
+                            <a href="/" class="nav-link text-white">
+                                <i class="pi pi-tags bi d-block mx-auto mb-1 icon-menu"/>
+                                Categorias
+                            </a>
+                        </li>
+                        <li jsf:rendered="#{seguridadBean.autenticado}">
+                            <a href="/usuario/perfil.xhtml" class="nav-link text-white">
                                 <i class="pi pi-user bi d-block mx-auto mb-1 icon-menu"/>
                                 Perfil
                             </a>
                         </li>
-                        <li>
-                            <a href="crear_producto.xhtml" class="nav-link text-white">
+                        <li jsf:rendered="#{seguridadBean.autenticado}">
+                            <a href="/usuario/crear_producto.xhtml" class="nav-link text-white">
                                 <i class="pi pi-plus bi d-block mx-auto mb-1 icon-menu"/>
                                 Crear Producto
                             </a>
                         </li>
-                        <li>
-                            <a href="compras_usuario.xhtml" class="nav-link text-white">
+                        <li jsf:rendered="#{seguridadBean.autenticado}">
+                            <a href="/usuario/compras_usuario.xhtml" class="nav-link text-white">
                                 <i class="pi pi-dollar bi d-block mx-auto mb-1 icon-menu"/>
                                 Mis compras
                             </a>
                         </li>
-                        <li>
-                            <a href="carrito.xhtml" class="nav-link text-white">
+                        <li jsf:rendered="#{seguridadBean.autenticado}">
+                            <a href="/usuario/carrito.xhtml" class="nav-link text-white">
                                 <i class="pi pi-shopping-cart bi d-block mx-auto mb-1 icon-menu"/>
                                 Carrito
                             </a>
                         </li>
-                        <li>
-                            <a href="productos_usuario.xhtml" class="nav-link text-white">
+                        <li jsf:rendered="#{seguridadBean.autenticado}">
+                            <a href="/usuario/productos_usuario.xhtml" class="nav-link text-white">
                                 <i class="pi pi-list bi d-block mx-auto mb-1 icon-menu"/>
                                 Mis productos
                             </a>

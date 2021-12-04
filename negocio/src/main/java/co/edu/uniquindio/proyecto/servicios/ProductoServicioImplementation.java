@@ -1,13 +1,13 @@
 package co.edu.uniquindio.proyecto.servicios;
 
+import co.edu.uniquindio.proyecto.dto.ProductoCarrito;
 import co.edu.uniquindio.proyecto.entidades.*;
-import co.edu.uniquindio.proyecto.repositorios.CategoriaRepository;
-import co.edu.uniquindio.proyecto.repositorios.ComentarioRepository;
-import co.edu.uniquindio.proyecto.repositorios.ProductoRepository;
-import co.edu.uniquindio.proyecto.repositorios.UsuarioRepository;
+import co.edu.uniquindio.proyecto.repositorios.*;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,15 +22,21 @@ public class ProductoServicioImplementation implements ProductoServicio {
 
     private final ComentarioRepository comentarioRepository;
 
+    private final CompraRepository compraRepository;
+
+    private final DetalleCompraRepository detalleCompraRepository;
+
     public Producto buscarProductoPorCodigo(Integer codigoProducto) {
         return productoRepository.findById(codigoProducto).get();
     }
 
-    public ProductoServicioImplementation(ProductoRepository productoRepository, CategoriaRepository categoriaRepository, UsuarioRepository usuarioRepository, ComentarioRepository comentarioRepository) {
+    public ProductoServicioImplementation(ProductoRepository productoRepository, CategoriaRepository categoriaRepository, UsuarioRepository usuarioRepository, ComentarioRepository comentarioRepository, CompraRepository compraRepository, DetalleCompraRepository detalleCompraRepository) {
         this.productoRepository = productoRepository;
         this.categoriaRepository = categoriaRepository;
         this.usuarioRepository = usuarioRepository;
         this.comentarioRepository = comentarioRepository;
+        this.compraRepository = compraRepository;
+        this.detalleCompraRepository = detalleCompraRepository;
     }
 
     @Override
@@ -145,12 +151,33 @@ public class ProductoServicioImplementation implements ProductoServicio {
     }
 
     @Override
-    public void comprarProductos(Compra compra) throws Exception {
-        int tamanio = compra.getDetallesCompras().size();
-        for (int i = 0; i < tamanio; i++) {
-            Optional<Usuario> usuario = usuarioRepository.findById(compra.getDetallesCompras().get(i).getCodigoProducto().getCodigoVendedor().getCodigo());
-            usuario.get().getProductos().remove(compra.getDetallesCompras().get(i).getCodigoProducto());
+    public Compra comprarProductos(Usuario usuario, List<ProductoCarrito> productos, String medioPago) throws Exception {
+        Compra compra = new Compra();
+
+        compra.setCodigoUsuario(usuario);
+        compra.setFechaCompra(LocalDateTime.now(ZoneId.of("America/Bogota")));
+        compra.setMedioPago(medioPago);
+
+        Compra compraGuardada = compraRepository.save(compra);
+
+        DetalleCompra dc;
+        for (ProductoCarrito p : productos) {
+            dc = new DetalleCompra();
+            dc.setPrecioProducto(p.getPrecio());
+            dc.setUnidades(p.getUnidades());
+            dc.setCodigoCompra(compraGuardada);
+            dc.setCodigoProducto(productoRepository.findById(p.getId()).get());
+            detalleCompraRepository.save(dc);
+            Producto producto = productoRepository.findById(p.getId()).get();
+            producto.setDisponibilidad(producto.getDisponibilidad()-p.getUnidades());
+            if (producto.getDisponibilidad() == 0) {
+                productoRepository.delete(producto);
+            }else {
+                productoRepository.save(producto);
+            }
         }
+
+        return compraGuardada;
     }
 
     @Override
