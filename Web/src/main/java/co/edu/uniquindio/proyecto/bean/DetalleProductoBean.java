@@ -34,6 +34,9 @@ public class DetalleProductoBean implements Serializable {
     private Producto producto;
 
     @Getter @Setter
+    private Integer calificacionPromedio;
+
+    @Getter @Setter
     private Comentario nuevoComentario;
 
     @Getter @Setter
@@ -45,6 +48,7 @@ public class DetalleProductoBean implements Serializable {
         if(codigoProducto != null && !codigoProducto.isEmpty()){
             try {
                 producto = productoServicio.obtenerProducto(Integer.parseInt(codigoProducto));
+                calificacionPromedio = productoServicio.sacarCalificaciónProducto(producto);
             } catch (Exception e) {
                 e.printStackTrace();
             }

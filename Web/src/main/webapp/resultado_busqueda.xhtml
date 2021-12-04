@@ -7,16 +7,10 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<h:head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Resultado de búsqueda</title>
-    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
-    <h:outputStylesheet library="css" name="styles.css"/>
-    <h:outputScript library="js" name="bootstrap.bundle.min.js"/>
-</h:head>
-<h:body>
-    <div class="container">
+<ui:composition template="WEB-INF/template.xhtml">
+    <ui:define name="title">Resultados de busqueda</ui:define>
+    <ui:define name="content">
+        <h1>Resultados de la Busqueda para '${busquedaBean.busquedaParam}'</h1>
         <h:form>
             <p:dataView value="#{busquedaBean.productos}" paginator="true" rows="3" var="producto" gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 
@@ -57,6 +51,6 @@
 
             </p:dataView>
         </h:form>
-    </div>
-</h:body>
+    </ui:define>
+</ui:composition>
 </html>

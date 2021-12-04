@@ -7,6 +7,7 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
@@ -47,5 +48,10 @@ public class Comentario implements Serializable {
         this.fechaComentario = fechaComentario;
         this.codigoProducto = producto;
         this.codigoUsuario = usuario;
+    }
+
+    public String getFechaEstilo(){
+        String aux = fechaComentario.format(DateTimeFormatter.ISO_DATE_TIME);
+        return aux.replaceAll("T"," a las ");
     }
 }
