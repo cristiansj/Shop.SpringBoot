@@ -99,4 +99,15 @@ public class Producto implements Serializable {
         this.categorias = categorias;
         this.imagenes = imagenes;
     }
+
+    public String getCategoriasEstilo(){
+        String concatenador = "";
+        for (int i = 0; i < categorias.size() && !categorias.isEmpty() && categorias != null; i++) {
+            concatenador = concatenador + categorias.get(i).getNombre();
+            if (i != categorias.size()-1) {
+                concatenador = concatenador + ", ";
+            }
+        }
+        return concatenador;
+    }
 }

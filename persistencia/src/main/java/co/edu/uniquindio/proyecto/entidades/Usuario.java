@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Usuario extends Persona implements Serializable {
 
     @ManyToOne
@@ -21,25 +22,32 @@ public class Usuario extends Persona implements Serializable {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @OneToMany
+    @ManyToMany
+    @ToString.Exclude
     private List<Producto> productosFavoritos;
 
-    @OneToMany
+    @ManyToMany
+    @ToString.Exclude
     private List<Producto> carrito;
 
     @OneToMany(mappedBy = "usuarioComprador")
+    @ToString.Exclude
     private List<Chat> chat;
 
     @OneToMany(mappedBy = "codigoVendedor")
+    @ToString.Exclude
     private List<Producto> productos;
 
     @OneToMany(mappedBy = "codigoUsuario")
+    @ToString.Exclude
     private List<Comentario>comentarios;
 
     @OneToMany(mappedBy = "codigoUsuario")
+    @ToString.Exclude
     private List<SubastaUsuario> subastaUsuarios;
 
     @OneToMany(mappedBy = "codigoUsuario")
+    @ToString.Exclude
     private List<Compra> compras;
 
     public Usuario(Integer codigo, String nombre, String username, String email, String password, Ciudad ciudad, HashMap<String, String> numTelefonos) {

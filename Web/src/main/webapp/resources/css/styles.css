@@ -169,6 +169,19 @@
     border: none;
 }
 
+#info-sesion{
+    position: relative;
+}
+
+#info-sesion > * {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+#info-sesion > h5 {
+    margin-bottom: 0;
+}
 @media only screen and (max-width: 768px) {
     .comentario-usuario{
         width: 100%;
