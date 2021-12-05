@@ -65,6 +65,12 @@
                             </a>
                         </li>
                         <li jsf:rendered="#{seguridadBean.autenticado}">
+                            <a href="/usuario/productos_favoritos.xhtml" class="nav-link text-white">
+                                <i class="pi pi-heart bi d-block mx-auto mb-1 icon-menu"/>
+                                Favoritos
+                            </a>
+                        </li>
+                        <li jsf:rendered="#{seguridadBean.autenticado}">
                             <a href="/usuario/productos_usuario.xhtml" class="nav-link text-white">
                                 <i class="pi pi-list bi d-block mx-auto mb-1 icon-menu"/>
                                 Mis productos
@@ -82,6 +88,7 @@
                         <p:commandButton icon="pi pi-search" action="#{busquedaBean.buscar}" update="@form"/>
                     </h:form>
                 </div>
+
                 <div class="text-end">
                     <h:form rendered="#{!seguridadBean.autenticado}">
                         <p:commandButton value="Login" styleClass="btn btn-primary me-2" onclick="PF('login').show()" icon="pi pi-sign-in"/>

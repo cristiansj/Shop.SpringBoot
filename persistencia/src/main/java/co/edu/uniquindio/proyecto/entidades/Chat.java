@@ -10,6 +10,7 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
+@ToString
 public class Chat implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +27,8 @@ public class Chat implements Serializable {
     @ToString.Exclude
     private List<Mensaje> mensajes;
 
-    public Chat(Integer codigo, Usuario usuario, Producto producto) {
-
-        this.codigo = codigo;
+    public Chat(Usuario usuario, Producto producto) {
         this.codigoProducto = producto;
         this.usuarioComprador = usuario;
-
     }
 }

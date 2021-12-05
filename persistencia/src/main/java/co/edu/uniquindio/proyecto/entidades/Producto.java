@@ -24,6 +24,7 @@ public class Producto implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
 
     @Column(nullable = false)
@@ -87,8 +88,7 @@ public class Producto implements Serializable {
         return "producto.png";
     }
 
-    public Producto(Integer codigo, String nombre, Integer disponibilidad, String descripcion, List<String> imagenes, Double precio, LocalDateTime fechaLimite, Usuario usuario, Ciudad ciudad, ArrayList<Categoria> categorias) {
-        this.codigo = codigo;
+    public Producto(String nombre, Integer disponibilidad, String descripcion, List<String> imagenes, Double precio, LocalDateTime fechaLimite, Usuario usuario, Ciudad ciudad, ArrayList<Categoria> categorias) {
         this.nombre = nombre;
         this.disponibilidad = disponibilidad;
         this.descripcion = descripcion;

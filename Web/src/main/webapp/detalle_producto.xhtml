@@ -7,7 +7,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:P="http://java.sun.com/jsf/html">
 <ui:composition template="WEB-INF/template.xhtml">
     <ui:define name="title">#{detalleProductoBean.producto.nombre}</ui:define>
     <ui:define name="content">
@@ -23,22 +23,28 @@
             <div class="col-lg-5 col-md-1">
                 <div class="p-grid">
                     <div class="box">
+                        <h:form rendered="#{seguridadBean.autenticado}">
+                                <div jsf:rendered="#{!detalleProductoBean.favorito}">
+                                    <p:commandButton action="#{detalleProductoBean.aniadirFavorito()}" icon="pi pi-heart" update="@form" styleClass="float-end"/>
+                                </div>
+                        </h:form>
                         <p:rating value="#{detalleProductoBean.calificacionPromedio}" readonly="true"/>
                         <h1 class="mt-4">#{detalleProductoBean.producto.nombre}</h1>
-                        <h1 class="mt-4">#{detalleProductoBean.producto.precio}</h1>
+                        <h4 class="mt-4">Precio: $#{detalleProductoBean.producto.precio}</h4>
+                        <h4 class="mt-4">Unidades disponibles: #{detalleProductoBean.producto.disponibilidad}</h4>
                         <h:form class="mt-4" rendered="#{seguridadBean.autenticado}">
                             <p:commandButton value="Añadir al carrito" icon="pi pi-shopping-cart" update="@form" action="#{seguridadBean.agregarAlCarrito(detalleProductoBean.producto.codigo, detalleProductoBean.producto.precio, detalleProductoBean.producto.nombre, detalleProductoBean.producto.imagenPrincipal)}"/>
                             <p:growl for="msj-bean" showDetail="true"/>
                         </h:form>
                     </div>
-                    <div class="box"><p>Ciudad: #{detalleProductoBean.producto.codigoCiudad.nombre}</p></div>
+                </div>
+                <div class="box"><h4>Ciudad: #{detalleProductoBean.producto.codigoCiudad.nombre}</h4></div>
                     <p:dataList emptyMessage="No hay categorias para este producto" styleClass="lista-carac" value="#{detalleProductoBean.producto.categorias}" var="categoria">
                         <f:facet name="header">Categorias: </f:facet>
                         <p>#{categoria.nombre}</p>
                     </p:dataList>
                 </div>
             </div>
-        </div>
         <p:panel header="Descripción" styleClass="mt-3">
             <h:outputText value="#{detalleProductoBean.producto.descripcion}" escape="false"/>
         </p:panel>
@@ -49,13 +55,12 @@
                     <p:rating value="#{detalleProductoBean.nuevoComentario.calificacion}" rendered="true"/>
                 </h:panelGrid>
                 <p:commandButton value="Comentar" icon="pi pi-comment" iconPos="left" update="@form,lista-c" styleClass="mt-4" action="#{detalleProductoBean.crearComentario}"/>
-                <p:growl for="msj-pregunta" showDetail="true"/>
             </h:form>
         </p:panel>
         <p:panel header="Comentarios" styleClass="mt-3">
             <div class="blog-comment">
                 <ul class="comments">
-                    <p:dataList id="lista-c" value="#{detalleProductoBean.comentarios}" var="comentario" emptyMessage="Sin comentarios" type="definition">
+                    <p:dataList id="lista-c" value="#{detalleProductoBean.comentarios}" var="comentario" varStatus="c" emptyMessage="Sin comentarios" type="definition">
                         <li class="clearfix">
                             <img src="/uploads/avatar.png" class="avatar" alt=""/>
                             <div class="post-comments">

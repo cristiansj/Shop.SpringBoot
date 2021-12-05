@@ -28,10 +28,14 @@ public class DetalleProductoBean implements Serializable {
     private UsuarioServicio usuarioServicio;
 
     @Value("#{param['producto']}")
+    @Getter @Setter
     private String codigoProducto;
 
     @Getter @Setter
     private Producto producto;
+
+    @Getter @Setter
+    private boolean favorito;
 
     @Getter @Setter
     private Integer calificacionPromedio;
@@ -70,6 +74,18 @@ public class DetalleProductoBean implements Serializable {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void aniadirFavorito(){
+        if (usuarioSesion != null) {
+            try {
+                Producto producto = productoServicio.obtenerProducto(Integer.parseInt(codigoProducto));
+                productoServicio.guardarProductoFavorito(producto,usuarioSesion);
+                favorito = true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

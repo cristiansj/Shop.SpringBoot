@@ -16,13 +16,10 @@ import java.util.Map;
 public class Colaboracion implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
 
     @OneToMany(mappedBy = "colaboracion")
     @ToString.Exclude
     private List<Producto> producto;
-
-    public Colaboracion(Integer codigo) {
-        this.codigo = codigo;
-    }
 }

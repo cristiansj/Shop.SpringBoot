@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyecto.bean;
 
 import co.edu.uniquindio.proyecto.dto.ProductoCarrito;
+import co.edu.uniquindio.proyecto.entidades.Comentario;
 import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 import co.edu.uniquindio.proyecto.servicios.ProductoServicio;
@@ -8,6 +9,7 @@ import co.edu.uniquindio.proyecto.servicios.UsuarioServicio;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -40,6 +42,10 @@ public class SeguridadBean implements Serializable {
     @Getter @Setter
     private List<ProductoCarrito> productosCarrito;
 
+    private List<Producto> misProductos;
+
+    private List<Producto> misProductosFavoritos;
+
     @Getter @Setter
     private Double subTotal;
 
@@ -47,6 +53,8 @@ public class SeguridadBean implements Serializable {
     public void inicializar(){
         this.subTotal = 0D;
         this.productosCarrito = new ArrayList<>();
+        this.misProductos = new ArrayList<>();
+        this.misProductosFavoritos = new ArrayList<>();
     }
 
     public String iniciarSesion(){
@@ -85,7 +93,8 @@ public class SeguridadBean implements Serializable {
     public void eliminarDelCarrito(int indice){
         subTotal -= productosCarrito.get(indice).getPrecio();
         productosCarrito.remove(indice);
-
+        FacesMessage fm1 = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Alerta", "se ha borrado exitosamente el producto");
+        FacesContext.getCurrentInstance().addMessage("borrar-bean", fm1);
     }
 
     public void actualizarSubTotal(){
@@ -123,6 +132,54 @@ public class SeguridadBean implements Serializable {
                     FacesContext.getCurrentInstance().addMessage("comprar-bean", fm);
                 }
             }
+        }
+    }
+
+    public String getTelefonos(){
+        return usuarioSesion.getNumTelefonos().toString();
+    }
+
+    public List<Producto> getMisProductos(){
+        if (autenticado) {
+            this.misProductos = usuarioServicio.listarMisProductos(usuarioSesion.getCodigo());
+        }
+        return misProductos;
+    }
+
+    public List<Producto> getMisProductosFavoritos(){
+        if (autenticado) {
+            try {
+                this.misProductosFavoritos = usuarioServicio.listarProductosFavoritos(usuarioSesion.getEmail());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return misProductosFavoritos;
+    }
+
+    public void actualizarDescuento(Producto producto){
+        try {
+            productoServicio.actualizarProducto(producto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void eliminarProducto(Integer codigo){
+        try {
+            productoServicio.eliminarProducto(codigo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void eliminarProductoFavorito(Producto producto){
+        try {
+            productoServicio.eliminarProductoFavorito(producto,usuarioSesion);
+            this.misProductosFavoritos.clear();
+            this.misProductosFavoritos = usuarioServicio.listarProductosFavoritos(usuarioSesion.getEmail());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

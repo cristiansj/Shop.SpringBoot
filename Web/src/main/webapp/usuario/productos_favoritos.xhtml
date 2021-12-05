@@ -8,11 +8,11 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="../WEB-INF/template.xhtml">
-    <ui:define name="title">Mis Productos</ui:define>
+    <ui:define name="title">Favorios</ui:define>
     <ui:define name="content">
-        <h1>Mis productos</h1>
+        <h1>Mis productos Favoritos</h1>
         <h:form>
-            <p:dataView value="#{seguridadBean.misProductos}" paginator="true" rows="3" var="producto" gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+            <p:dataView value="#{seguridadBean.misProductosFavoritos}" paginator="true" rows="3" var="producto" gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 
                 <p:dataViewGridItem>
                     <div class="card">
@@ -44,14 +44,8 @@
                             </p:outputPanel>
                         </div>
                         <div class="col-lg-2 col-md-1 align-self-center">
-                            <p>Descuento
-                                <p:spinner value="#{producto.descuento}" min="0" max="99" styleClass="text-center">
-                                    <p:ajax listener="#{seguridadBean.actualizarDescuento(producto)}"/>
-                                </p:spinner>
-                                <br/>
-                                <p:commandButton icon="pi pi-trash" update="@form" action="#{seguridadBean.eliminarProducto(producto.codigo)}" styleClass="btn btn-white border-secondary bg-white btn-md mb-2 float-end"/>
-                                <p:commandButton value="Ver Detalle" styleClass="ui-button-raised" icon="pi pi-arrow-right" iconPos="right" action="#{inicioBean.irADetalle(producto.codigo)}"/>
-                            </p>
+                            <p:commandButton icon="pi pi-trash" update="@form" action="#{seguridadBean.eliminarProductoFavorito(producto)}" styleClass="btn btn-white border-secondary bg-white btn-md mb-2 float-end"/>
+                            <p:commandButton value="Ver Detalle" styleClass="ui-button-raised" icon="pi pi-arrow-right" iconPos="right" action="#{inicioBean.irADetalle(producto.codigo)}"/>
                         </div>
                     </div>
                 </p:dataViewListItem>

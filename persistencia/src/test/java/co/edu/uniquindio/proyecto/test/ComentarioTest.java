@@ -39,24 +39,24 @@ public class ComentarioTest {
     @Test
     public void registrarTest(){
 
-        Ciudad ciudad = new Ciudad(1, "Berlín");
+        Ciudad ciudad = new Ciudad("Berlín");
         ciudadRepository.save(ciudad);
         //Creo el usuario que realiza el comentario.
         HashMap<String,String> numTelefonos = new HashMap<String, String>();
         numTelefonos.put("Casa","3145324325");
-        Usuario usuario = new Usuario(1, "Daniel", "Damomu", "daniel@uqvirtual.edu.co", "1489",ciudad, numTelefonos );
+        Usuario usuario = new Usuario("Daniel", "Damomu", "daniel@uqvirtual.edu.co", "1489",ciudad, numTelefonos );
         usuarioRepository.save(usuario);
         //Creo el producto que se va a comentar.
         LocalDateTime ldt = LocalDateTime.of(2022, 11, 4, 23, 11, 03);
-        Categoria categoria1 = new Categoria(1, "Ropa");
+        Categoria categoria1 = new Categoria("Ropa");
         ArrayList<Categoria> categorias= new ArrayList<Categoria>();
         categoriaRepository.save(categoria1);
         categorias.add(categoria1);
         ArrayList<String> imagenes = new ArrayList<String>();
-        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
+        Producto producto = new Producto("Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
         productoRepository.save(producto);
         //Creo un comentario y lo guardo.
-        Comentario comentario = new Comentario(1,"Me gusta mucho el producto", 4, LocalDateTime.now(), producto, usuario);
+        Comentario comentario = new Comentario("Me gusta mucho el producto", 4, LocalDateTime.now(), producto, usuario);
         Comentario guardado = comentarioRepository.save(comentario);
 
         Assertions.assertNotNull(guardado);

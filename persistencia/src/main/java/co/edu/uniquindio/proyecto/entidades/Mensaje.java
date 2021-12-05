@@ -31,8 +31,7 @@ public class Mensaje implements Serializable {
     private Chat codigoChat;
 
 
-    public Mensaje(Integer codigo, String mensaje, String emisor, LocalDateTime fecha, Chat chat) {
-        this.codigo = codigo;
+    public Mensaje(String mensaje, String emisor, LocalDateTime fecha, Chat chat) {
         this.mensaje = mensaje;
         this.emisor = emisor;
         this.fecha = fecha;

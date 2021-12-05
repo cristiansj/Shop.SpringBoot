@@ -41,33 +41,33 @@ public class SubastaUsuarioTest {
 
         //Creo una subasta y la guardo.
 
-        Ciudad ciudad = new Ciudad(1, "Medallon");
+        Ciudad ciudad = new Ciudad("Medallon");
         ciudadRepository.save(ciudad);
 
         HashMap<String, String> numTelefonos = new HashMap<String, String>();
         numTelefonos.put("oficina","75435678");
 
-        Usuario usuario = new Usuario(1, "Pepe", "pepito123", "pepito123@gmail.com", "1245", ciudad, numTelefonos);
+        Usuario usuario = new Usuario("Pepe", "pepito123", "pepito123@gmail.com", "1245", ciudad, numTelefonos);
         usuarioRepository.save(usuario);
 
         LocalDateTime ldt = LocalDateTime.of(2022, 02, 10, 19, 59, 59);
 
-        Categoria categoria1 = new Categoria(1, "Ropa");
+        Categoria categoria1 = new Categoria("Ropa");
         ArrayList<Categoria> categorias= new ArrayList<Categoria>();
         categoriaRepository.save(categoria1);
         categorias.add(categoria1);
 
         ArrayList<String> imagenes = new ArrayList<String>();
-        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
+        Producto producto = new Producto("Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
 
         Producto guardado = productoRepository.save(producto);
 
         ldt =  LocalDateTime.of(2021, 12, 12, 19, 15, 50);
-        Subasta subasta = new Subasta(1, ldt, producto);
+        Subasta subasta = new Subasta(ldt, producto);
 
         Subasta guardada = subastaRepository.save(subasta);
 
-        SubastaUsuario subastaUsuario = new SubastaUsuario(1,1542, LocalDateTime.now(), subasta, usuario);
+        SubastaUsuario subastaUsuario = new SubastaUsuario(1542, LocalDateTime.now(), subasta, usuario);
 
         SubastaUsuario subastaUsuarioG = subastaUsuarioRepository.save(subastaUsuario);
         Assertions.assertNotNull(subastaUsuarioG);

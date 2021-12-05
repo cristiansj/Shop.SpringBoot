@@ -113,6 +113,15 @@ public class UsuarioServicioImplementation implements UsuarioServicio{
         return buscado.get();
     }
 
+    @Override
+    public List<Producto> listarMisProductos(Integer idUsuario) {
+        Usuario usuario = usuarioRepository.findById(idUsuario).get();
+        if (usuario.getProductos() != null && !usuario.getProductos().isEmpty()) {
+            return usuario.getProductos();
+        }
+        return null;
+    }
+
     Optional<Usuario> buscarPorCodigo(Integer codigo){
         return usuarioRepository.findById(codigo);
     }

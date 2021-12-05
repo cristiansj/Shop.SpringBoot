@@ -16,6 +16,7 @@ public class Ciudad implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo;
 
     @Column(length = 100,nullable = false)
@@ -29,8 +30,7 @@ public class Ciudad implements Serializable {
     @ToString.Exclude
     private List<Usuario> usuarios;
 
-    public Ciudad(Integer codigo, String nombre) {
-        this.codigo = codigo;
+    public Ciudad(String nombre) {
         this.nombre = nombre;
     }
 }

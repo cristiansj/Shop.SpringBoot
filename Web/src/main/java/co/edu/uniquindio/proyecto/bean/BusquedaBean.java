@@ -1,6 +1,9 @@
 package co.edu.uniquindio.proyecto.bean;
 
+import co.edu.uniquindio.proyecto.entidades.Categoria;
 import co.edu.uniquindio.proyecto.entidades.Producto;
+import co.edu.uniquindio.proyecto.repositorios.CategoriaRepository;
+import co.edu.uniquindio.proyecto.servicios.CategoriaServicio;
 import co.edu.uniquindio.proyecto.servicios.ProductoServicio;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,13 +29,24 @@ public class BusquedaBean implements Serializable {
     private String busquedaParam;
 
     @Getter @Setter
+    private List<Categoria> categorias;
+
+    @Getter @Setter
+    private List<Categoria> filtros;
+
+    @Getter @Setter
     private List<Producto> productos;
 
     @Autowired
     private ProductoServicio productoServicio;
 
+    @Autowired
+    private CategoriaServicio categoriaServicio;
+
     @PostConstruct
     public void inicializar(){
+        categorias = categoriaServicio.listarCategoria();
+        filtros = new ArrayList<>();
         if (busquedaParam != null && !busquedaParam.isEmpty()){
             try {
                 productos = productoServicio.buscarProducto(busquedaParam,null);

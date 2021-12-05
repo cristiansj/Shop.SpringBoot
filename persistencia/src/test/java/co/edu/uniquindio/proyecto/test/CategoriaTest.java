@@ -28,7 +28,7 @@ public class CategoriaTest {
     @Test
     public void registrarTest(){
         //Creo el categoria y la guardo.
-        Categoria categoria= new Categoria( 0,"Tecnología");
+        Categoria categoria= new Categoria("Tecnología");
         Categoria guardada = categoriaRepository.save(categoria);
 
         Assertions.assertNotNull(guardada);

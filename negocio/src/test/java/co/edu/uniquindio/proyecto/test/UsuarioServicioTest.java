@@ -29,13 +29,13 @@ public class UsuarioServicioTest {
     @Test
     public void registrarTest(){
 
-        Ciudad ciudad = new Ciudad(1, "Medellín");
+        Ciudad ciudad = new Ciudad("Medellín");
         ciudadRepository.save(ciudad);
 
         HashMap<String, String> numTelefonos = new HashMap<String, String>();
         numTelefonos.put("oficina","75435467");
 
-        Usuario user = new Usuario(1, "Pepe", "pepito", "Pepe123@email.com", "1234", ciudad, numTelefonos);
+        Usuario user = new Usuario("Pepe", "pepito", "Pepe123@email.com", "1234", ciudad, numTelefonos);
 
         try{
             Usuario respuesta = usuarioServicio.registrarUsuario(user);
@@ -60,7 +60,7 @@ public class UsuarioServicioTest {
     @Test
     public void listarTest() throws Exception{
 
-        Ciudad ciudad = new Ciudad(1, "Manizales");
+        Ciudad ciudad = new Ciudad("Manizales");
         ciudadRepository.save(ciudad);
 
         HashMap<String,String> numTelefonos1 = new HashMap<String,String>();
@@ -69,8 +69,8 @@ public class UsuarioServicioTest {
         numTelefonos1.put("Casa","3122456543");
         numTelefonos2.put("Oficina","74325412");
 
-        Usuario user1 = new Usuario(1, "Pepe", "pepito", "Pepe123@email.com", "1234", ciudad, numTelefonos1);
-        Usuario user2 = new Usuario(2, "Peppe", "pepitto", "Pepe124@email.com", "1234", ciudad, numTelefonos2);
+        Usuario user1 = new Usuario("Pepe", "pepito", "Pepe123@email.com", "1234", ciudad, numTelefonos1);
+        Usuario user2 = new Usuario("Peppe", "pepitto", "Pepe124@email.com", "1234", ciudad, numTelefonos2);
 
         usuarioServicio.registrarUsuario(user1);
         usuarioServicio.registrarUsuario(user2);
@@ -83,12 +83,12 @@ public class UsuarioServicioTest {
     @Test
     public void actualizarTest() throws Exception{
 
-        Ciudad ciudad = new Ciudad(1, "Armenia");
+        Ciudad ciudad = new Ciudad("Armenia");
         ciudadRepository.save(ciudad);
 
         HashMap<String,String> numTelefonos = new HashMap<String, String>();
         numTelefonos.put("Personal","3132355729");
-        Usuario user1 = new Usuario(1, "Pepe", "pepito", "Pepe123@email.com", "1234", ciudad, numTelefonos);
+        Usuario user1 = new Usuario("Pepe", "pepito", "Pepe123@email.com", "1234", ciudad, numTelefonos);
         usuarioServicio.registrarUsuario(user1);
 
         try{
@@ -105,13 +105,13 @@ public class UsuarioServicioTest {
     @Test
     public void loginTest() throws Exception{
 
-        Ciudad ciudad = new Ciudad(1, "Cali");
+        Ciudad ciudad = new Ciudad("Cali");
         ciudadRepository.save(ciudad);
 
         HashMap<String,String> numTelefonos = new HashMap<String, String>();
         numTelefonos.put("Personal","3132355729");
 
-        Usuario user1 = new Usuario(1, "Pepe", "pepito", "Pepe123@email.com", "1234", ciudad, numTelefonos);
+        Usuario user1 = new Usuario("Pepe", "pepito", "Pepe123@email.com", "1234", ciudad, numTelefonos);
         usuarioServicio.registrarUsuario(user1);
 
         try {

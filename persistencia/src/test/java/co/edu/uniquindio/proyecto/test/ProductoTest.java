@@ -36,24 +36,24 @@ public class ProductoTest {
     @Test
     public void registrarTest(){
         //Creo un producto y lo guardo.
-        Ciudad ciudad = new Ciudad(1, "Medallon");
+        Ciudad ciudad = new Ciudad("Medallon");
         ciudadRepository.save(ciudad);
 
         HashMap<String, String> numTelefonos = new HashMap<String, String>();
         numTelefonos.put("oficina","75435678");
 
-        Usuario usuario = new Usuario(1, "Pepe", "pepito123", "pepito123@gmail.com", "1245", ciudad, numTelefonos);
+        Usuario usuario = new Usuario("Pepe", "pepito123", "pepito123@gmail.com", "1245", ciudad, numTelefonos);
         usuarioRepository.save(usuario);
 
         LocalDateTime ldt = LocalDateTime.of(2022, 02, 10, 19, 59, 59);
 
-        Categoria categoria1 = new Categoria(1, "Ropa");
+        Categoria categoria1 = new Categoria("Ropa");
         ArrayList<Categoria> categorias= new ArrayList<Categoria>();
         categoriaRepository.save(categoria1);
         categorias.add(categoria1);
 
         ArrayList<String> imagenes = new ArrayList<String>();
-        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
+        Producto producto = new Producto("Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
 
         Producto guardado = productoRepository.save(producto);
         System.out.println(guardado.toString());

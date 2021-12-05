@@ -36,12 +36,12 @@ public class CompraTest {
         HashMap<String, String> numTelefonos = new HashMap<String, String>();
         numTelefonos.put("Casa","3142534578");
 
-        Usuario usuario = new Usuario(1, "Pepe", "pepito123", "pepito123@gmail.com", "1247", ciudad, numTelefonos);
+        Usuario usuario = new Usuario("Pepe", "pepito123", "pepito123@gmail.com", "1247", ciudad, numTelefonos);
         usuarioRepository.save(usuario);
 
         LocalDateTime localDateTime = LocalDateTime.now();
 
-        Compra compra = new Compra(1, localDateTime, "Tarjeta", usuario);
+        Compra compra = new Compra(localDateTime, "Tarjeta", usuario);
 
         Compra compraG = compraRepository.save(compra);
         Assertions.assertNotNull(compraG);

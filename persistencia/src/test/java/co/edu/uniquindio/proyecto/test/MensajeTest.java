@@ -40,28 +40,28 @@ public class MensajeTest {
     @Test
     public void registrarTest(){
 
-        Ciudad ciudad = new Ciudad(1, "Cali");
+        Ciudad ciudad = new Ciudad("Cali");
         ciudadRepository.save(ciudad);
 
         HashMap<String, String> numTelefonos = new HashMap<String, String>();
         numTelefonos.put("Casa","3124536789");
 
-        Usuario usuario = new Usuario(1, "Pepe", "pepito123", "pepito123@gmail.com", "1452", ciudad, numTelefonos);
+        Usuario usuario = new Usuario("Pepe", "pepito123", "pepito123@gmail.com", "1452", ciudad, numTelefonos);
         usuarioRepository.save(usuario);
 
         LocalDateTime ldt = LocalDateTime.of(2022, 12, 11, 22, 11, 35);
-        Categoria categoria1 = new Categoria(1, "Ropa");
+        Categoria categoria1 = new Categoria("Ropa");
         ArrayList<Categoria> categorias= new ArrayList<Categoria>();
         categoriaRepository.save(categoria1);
         categorias.add(categoria1);
         ArrayList<String> imagenes = new ArrayList<String>();
-        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
+        Producto producto = new Producto("Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
         productoRepository.save(producto);
 
-        Chat chat = new Chat(1, usuario, producto);
+        Chat chat = new Chat(usuario, producto);
         chatRepository.save(chat);
 
-        Mensaje mensaje = new Mensaje(1,"hola mundo","cristian", LocalDateTime.now(), chat);
+        Mensaje mensaje = new Mensaje("hola mundo","cristian", LocalDateTime.now(), chat);
 
         Mensaje mensajeG = mensajeRepository.save(mensaje);
         Assertions.assertNotNull(mensajeG);

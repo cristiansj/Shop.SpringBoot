@@ -21,7 +21,7 @@ public class ColaboracionTest {
 
     @Test
     public void registrarTest(){
-        Colaboracion colaboracion = new Colaboracion(1);
+        Colaboracion colaboracion = new Colaboracion();
 
         Colaboracion colaboracionG = colaboracionRepository.save(colaboracion);
         Assertions.assertNotNull(colaboracionG);

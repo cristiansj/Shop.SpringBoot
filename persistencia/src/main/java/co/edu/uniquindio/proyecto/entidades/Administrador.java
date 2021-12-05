@@ -11,7 +11,7 @@ import java.util.HashMap;
 @Setter
 @NoArgsConstructor
 public class Administrador extends Persona implements Serializable {
-    public Administrador(Integer codigo, String nombre, String email, String password, HashMap<String, String> numTelefonos) {
-        super(codigo, nombre, email, password, numTelefonos);
+    public Administrador(String nombre, String email, String password, HashMap<String, String> numTelefonos) {
+        super(nombre, email, password, numTelefonos);
     }
 }

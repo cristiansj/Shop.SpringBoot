@@ -21,6 +21,8 @@ public interface ProductoServicio {
 
     void comentarProducto(Comentario comentario) throws Exception;
 
+    void responderComentario(Comentario comentario, String mensaje) throws Exception;
+
     void guardarProductoFavorito(Producto producto, Usuario usuario) throws Exception;
 
     void eliminarProductoFavorito(Producto producto, Usuario usuario) throws Exception;

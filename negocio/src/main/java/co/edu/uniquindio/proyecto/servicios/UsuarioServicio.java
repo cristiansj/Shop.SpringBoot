@@ -20,4 +20,6 @@ public interface UsuarioServicio {
     Usuario obtenerUsuario(Integer codigo)throws Exception;
 
     Usuario hacerLogin(String email, String password)throws Exception;
+
+    List<Producto> listarMisProductos(Integer idUsuario);
 }

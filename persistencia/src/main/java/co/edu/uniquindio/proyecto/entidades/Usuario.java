@@ -50,8 +50,8 @@ public class Usuario extends Persona implements Serializable {
     @ToString.Exclude
     private List<Compra> compras;
 
-    public Usuario(Integer codigo, String nombre, String username, String email, String password, Ciudad ciudad, HashMap<String, String> numTelefonos) {
-        super(codigo, nombre, email, password, numTelefonos);
+    public Usuario(String nombre, String username, String email, String password, Ciudad ciudad, HashMap<String, String> numTelefonos) {
+        super(nombre, email, password, numTelefonos);
         this.username = username;
         this.ciudad = ciudad;
     }

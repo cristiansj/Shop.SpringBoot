@@ -25,7 +25,7 @@ public class CiudadTest {
     @Test
     public void registrarTest(){
         //Creo una ciudad y la guardo.
-        Ciudad ciudad = new Ciudad(1, "Medellín");
+        Ciudad ciudad = new Ciudad("Medellín");
         Ciudad guardado = ciudadRepository.save(ciudad);
 
         Assertions.assertNotNull(guardado);

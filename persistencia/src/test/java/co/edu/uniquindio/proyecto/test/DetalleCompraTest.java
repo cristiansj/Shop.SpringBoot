@@ -43,31 +43,31 @@ public class DetalleCompraTest {
     @Test
     public void registrarTest(){
 
-        Ciudad ciudad = new Ciudad(1, "Armenia");
+        Ciudad ciudad = new Ciudad("Armenia");
         ciudadRepository.save(ciudad);
 
         HashMap<String, String> numTelefonos = new HashMap<>();
         numTelefonos.put("Casa","3175436254");
 
-        Usuario usuario = new Usuario(1, "Pepe", "pepito123", "pepito123@gmail.com", "1245", ciudad, numTelefonos);
+        Usuario usuario = new Usuario("Pepe", "pepito123", "pepito123@gmail.com", "1245", ciudad, numTelefonos);
         usuarioRepository.save(usuario);
 
         LocalDateTime ldt = LocalDateTime.of(2022, 12, 12, 11, 22, 33);
-        Categoria categoria1 = new Categoria(1, "Ropa");
+        Categoria categoria1 = new Categoria("Ropa");
         ArrayList<Categoria> categorias= new ArrayList<Categoria>();
         categoriaRepository.save(categoria1);
         categorias.add(categoria1);
         ArrayList<String> imagenes = new ArrayList<String>();
-        Producto producto = new Producto(1, "Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
+        Producto producto = new Producto("Camiseta", 22, "Camiseta negra",imagenes, 25000D, ldt, usuario, ciudad, categorias);
         productoRepository.save(producto);
 
         LocalDateTime ldt2 = LocalDateTime.now();
 
-        Compra compra = new Compra(1, ldt2, "Tarjeta", usuario);
+        Compra compra = new Compra(ldt2, "Tarjeta", usuario);
         compraRepository.save(compra);
 
         //Creo un detalleCompra y lo guardo.
-        DetalleCompra detalleCompra = new DetalleCompra(1, 5, 5000D, compra, producto);
+        DetalleCompra detalleCompra = new DetalleCompra(5, 5000D, compra, producto);
 
         DetalleCompra guardado = detalleCompraRepository.save(detalleCompra);
         Assertions.assertNotNull(guardado);

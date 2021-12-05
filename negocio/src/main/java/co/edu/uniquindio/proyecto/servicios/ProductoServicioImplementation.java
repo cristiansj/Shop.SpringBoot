@@ -107,6 +107,14 @@ public class ProductoServicioImplementation implements ProductoServicio {
     }
 
     @Override
+    public void responderComentario(Comentario comentario, String mensaje) throws Exception {
+        if (comentario != null) {
+            comentario.setRespuesta(mensaje);
+            comentarioRepository.save(comentario);
+        }
+    }
+
+    @Override
     public void guardarProductoFavorito(Producto producto, Usuario usuario) throws Exception {
 
         Optional<Usuario> usuarioBuscado = usuarioRepository.findById(usuario.getCodigo());
@@ -123,9 +131,8 @@ public class ProductoServicioImplementation implements ProductoServicio {
         if (usuarioBuscado.get().getProductosFavoritos().contains(producto)) {
             throw new Exception("El producto que se quiere añadir favoritos ya está en la lista de favoritos");
         }
-
         usuarioBuscado.get().getProductosFavoritos().add(producto);
-
+        usuarioRepository.save(usuarioBuscado.get());
     }
 
     @Override
@@ -145,9 +152,8 @@ public class ProductoServicioImplementation implements ProductoServicio {
         if (!usuarioBuscado.get().getProductosFavoritos().contains(producto)) {
             throw new Exception("El producto que se quiere remover de favoritos no está en la lista de favoritos");
         }
-
         usuarioBuscado.get().getProductosFavoritos().remove(producto);
-
+        usuarioRepository.save(usuarioBuscado.get());
     }
 
     @Override

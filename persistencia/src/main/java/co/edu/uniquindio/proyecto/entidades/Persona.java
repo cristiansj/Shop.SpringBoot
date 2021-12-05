@@ -38,8 +38,7 @@ public class Persona implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     private Map<String,String> numTelefonos = new HashMap<>();
 
-    public Persona(Integer codigo, String nombre, String email, String password, HashMap<String,String> numTelefonos) {
-        this.codigo = codigo;
+    public Persona(String nombre, String email, String password, HashMap<String,String> numTelefonos) {
         this.nombre = nombre;
         this.email = email;
         this.password = password;

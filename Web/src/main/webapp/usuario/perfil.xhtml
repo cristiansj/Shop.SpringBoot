@@ -10,8 +10,103 @@
 <ui:composition template="../WEB-INF/template.xhtml">
     <ui:define name="title">Perfil</ui:define>
     <ui:define name="content">
-        <h1>Sapo</h1>
+        <form method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                        <img src="/uploads/perfil.png" alt=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="col-md-6 text-black">
+                                    <label>Nickname</label>
+                                </div>
+                                <div class="col-md-6 text-black">
+                                    <p>#{seguridadBean.usuarioSesion.username}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 text-black">
+                                    <label>Nombre</label>
+                                </div>
+                                <div class="col-md-6 text-black">
+                                    <p>#{seguridadBean.usuarioSesion.nombre}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-md-6 text-black">
+                                    <p>#{seguridadBean.usuarioSesion.email}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 text-black">
+                                    <label>Telefonos</label>
+                                </div>
+                                <div class="col-md-6 text-black">
+                                    <p>#{seguridadBean.telefonos}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Experience</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>Expert</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Hourly Rate</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>10$/hr</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Total Projects</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>230</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>English Level</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>Expert</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Availability</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>6 months</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Your Bio</label><br/>
+                                    <p>Your detail description</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </ui:define>
-
 </ui:composition>
 </html>
