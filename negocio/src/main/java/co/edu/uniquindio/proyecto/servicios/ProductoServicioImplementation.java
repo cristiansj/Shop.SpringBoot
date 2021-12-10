@@ -26,17 +26,20 @@ public class ProductoServicioImplementation implements ProductoServicio {
 
     private final DetalleCompraRepository detalleCompraRepository;
 
+    private final SubastaRepository subastaRepository;
+
     public Producto buscarProductoPorCodigo(Integer codigoProducto) {
         return productoRepository.findById(codigoProducto).get();
     }
 
-    public ProductoServicioImplementation(ProductoRepository productoRepository, CategoriaRepository categoriaRepository, UsuarioRepository usuarioRepository, ComentarioRepository comentarioRepository, CompraRepository compraRepository, DetalleCompraRepository detalleCompraRepository) {
+    public ProductoServicioImplementation(ProductoRepository productoRepository, CategoriaRepository categoriaRepository, UsuarioRepository usuarioRepository, ComentarioRepository comentarioRepository, CompraRepository compraRepository, DetalleCompraRepository detalleCompraRepository, SubastaRepository subastaRepository) {
         this.productoRepository = productoRepository;
         this.categoriaRepository = categoriaRepository;
         this.usuarioRepository = usuarioRepository;
         this.comentarioRepository = comentarioRepository;
         this.compraRepository = compraRepository;
         this.detalleCompraRepository = detalleCompraRepository;
+        this.subastaRepository = subastaRepository;
     }
 
     @Override
@@ -95,6 +98,9 @@ public class ProductoServicioImplementation implements ProductoServicio {
     //voy aquí
     @Override
     public List<Producto> listarProductosPorCategoria(Categoria categoria) {
+        System.out.println(categoria.getNombre());
+        List<Producto> productos = productoRepository.listarProductosPorCategoria(categoria);
+        System.out.println(productos);
         return productoRepository.listarProductosPorCategoria(categoria);
     }
 
@@ -176,57 +182,22 @@ public class ProductoServicioImplementation implements ProductoServicio {
             detalleCompraRepository.save(dc);
             Producto producto = productoRepository.findById(p.getId()).get();
             producto.setDisponibilidad(producto.getDisponibilidad()-p.getUnidades());
-            if (producto.getDisponibilidad() == 0) {
-                productoRepository.delete(producto);
-            }else {
-                productoRepository.save(producto);
-            }
+            productoRepository.save(producto);
         }
 
         return compraGuardada;
     }
 
     @Override
-    public List<Producto> buscarProducto(String nombreProducto, String[] filtros) throws Exception {
+    public List<Producto> buscarProducto(String nombreProducto, Categoria categoria) throws Exception {
         List<Producto> productos = productoRepository.findByNombreContains(nombreProducto);
         if (productos.isEmpty()) {
             throw new Exception("No hemos encontrado coincidencias");
         }
-        if (filtros != null) {
-            if (filtros[0] != "") {
-                for (int i = 0; i < productos.size(); i++) {
-                    int tamanio = productos.get(i).getCategorias().size();
-                    boolean bandera = true;
-                    for (int j = 0; j < tamanio && bandera; j++) {
-                        if (productos.get(i).getCategorias().get(j).equals(filtros[0])) {
-                            bandera = false;
-                        }
-                    }
-                    if (bandera) {
-                        productos.remove(i);
-                    }
-                }
-            }
-            if (filtros[1] != "") {
-                for (int i = 0; i < productos.size(); i++) {
-                    if (!(productos.get(i).getPrecio() == Double.parseDouble(filtros[1]))) {
-                        productos.remove(i);
-                    }
-                }
-            }
-            if (filtros[2] != "") {
-                for (int i = 0; i < productos.size(); i++) {
-                    if (!(productos.get(i).getCodigoCiudad().getNombre().equals(filtros[2]))) {
-                        productos.remove(i);
-                    }
-                }
-            }
-            if (filtros[3] != "") {
-                for (int i = 0; i < productos.size(); i++) {
-                    Integer calificacionPromedio = productoRepository.sacarCalificaciónPromedio(productos.get(i));
-                    if (!(calificacionPromedio == Integer.parseInt(filtros[3]))) {
-                        productos.remove(i);
-                    }
+        if (categoria != null) {
+            for (int i = 0; i < productos.size(); i++) {
+                if (!(productos.get(i).getCategorias().contains(categoria))) {
+                    productos.remove(i);
                 }
             }
         }
@@ -291,8 +262,49 @@ public class ProductoServicioImplementation implements ProductoServicio {
     }
 
     @Override
+    public List<Producto> listarPorCalificación(Integer calificacion) {
+        List<Producto> productosCalificacion = productoRepository.findAll();
+        for (int i = 0; i<productosCalificacion.size(); i++){
+            if (productoRepository.sacarCalificaciónPromedio(productosCalificacion.get(i)) != calificacion){
+                productosCalificacion.remove(i);
+                i--;
+            }
+        }
+        return productosCalificacion;
+    }
+
+    @Override
+    public Integer contarFavorito(Integer codigoProducto) {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        Producto producto = productoRepository.findById(codigoProducto).get();
+        int contador = 0;
+        for (int i = 0; i < usuarios.size(); i++) {
+            if (usuarios.get(i).getProductosFavoritos().contains(producto)) {
+                contador++;
+            }
+        }
+        return contador;
+    }
+
+    @Override
     public List<Categoria> listarCategoria() {
         return categoriaRepository.findAll();
+    }
+
+    @Override
+    public void subastarProducto(LocalDateTime ldt, Producto producto) throws Exception {
+        List<Subasta> subastas = subastaRepository.findAll();
+        boolean bandera = true;
+        if (ldt.isBefore(LocalDateTime.now()) || ldt.isAfter(LocalDateTime.now().plusHours(24))){
+            throw new Exception("La subasta no puede durar más de un día ni cerrarse antes de la fecha actual bobo");
+        }
+        for (int i=0; i < subastas.size() && bandera;i++){
+            if(subastas.get(i).getProducto().equals(producto)){
+                throw new Exception("El producto ya se está subastando, debe esperar que la subasta termine para volver a subastar el producto");
+            }
+        }
+        Subasta subasta = new Subasta(ldt,producto);
+        subastaRepository.save(subasta);
     }
 
     @Override

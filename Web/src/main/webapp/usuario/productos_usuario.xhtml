@@ -50,7 +50,7 @@
                                 </p:spinner>
                                 <br/>
                                 <p:commandButton icon="pi pi-trash" update="@form" action="#{seguridadBean.eliminarProducto(producto.codigo)}" styleClass="btn btn-white border-secondary bg-white btn-md mb-2 float-end"/>
-                                <p:commandButton value="Ver Detalle" styleClass="ui-button-raised" icon="pi pi-arrow-right" iconPos="right" action="#{inicioBean.irADetalle(producto.codigo)}"/>
+                                <p:commandButton value="Ver Detalle" styleClass="ui-button-raised" icon="pi pi-arrow-right" iconPos="right" action="#{inicioBean.irADetallePorUsuario(producto.codigo)}"/>
                             </p>
                         </div>
                     </div>

@@ -11,6 +11,10 @@
 <ui:composition template="WEB-INF/template.xhtml">
     <ui:define name="title">#{detalleProductoBean.producto.nombre}</ui:define>
     <ui:define name="content">
+        <div id="fb-root"></div>
+        <script async="true" defer="true" crossorigin="anonymous"
+                src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&amp;version=v12.0&amp;appId=406506983855391&amp;autoLogAppEvents=1"
+                nonce="kSmqQEjP"></script>
         <div class="row">
             <div class="col-lg-7 col-md-1">
                 <div class="box box-stretched">
@@ -44,6 +48,14 @@
                         <p>#{categoria.nombre}</p>
                     </p:dataList>
                 </div>
+                <hr/>
+            <div class="fb-share-button"
+                 data-href="http://localhost:8080/"
+                 data-layout="button" data-size="small">
+
+                <a target="_blank"
+                   href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8080%2F&amp;src=sdkpreparse"
+                   class="fb-xfbml-parse-ignore">Compartir</a></div>
             </div>
         <p:panel header="Descripción" styleClass="mt-3">
             <h:outputText value="#{detalleProductoBean.producto.descripcion}" escape="false"/>

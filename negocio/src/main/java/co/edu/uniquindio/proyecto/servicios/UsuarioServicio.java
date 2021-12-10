@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.servicios;
 
+import co.edu.uniquindio.proyecto.entidades.Compra;
 import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 
@@ -16,6 +17,8 @@ public interface UsuarioServicio {
     List<Usuario> listarUsuarios();
 
     List<Producto> listarProductosFavoritos(String email) throws Exception;
+
+    List<Compra> listarCompras(Integer codigo);
 
     Usuario obtenerUsuario(Integer codigo)throws Exception;
 

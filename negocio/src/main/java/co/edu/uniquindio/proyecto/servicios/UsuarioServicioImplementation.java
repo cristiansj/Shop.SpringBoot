@@ -1,8 +1,10 @@
 package co.edu.uniquindio.proyecto.servicios;
 
+import co.edu.uniquindio.proyecto.entidades.Compra;
 import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 import co.edu.uniquindio.proyecto.repositorios.UsuarioRepository;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,10 @@ public class UsuarioServicioImplementation implements UsuarioServicio{
         if (buscado.isPresent()){
             throw new Exception("El nombre de usuario ingresado ya se encuentra en uso");
         }
+
+        StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+        user.setPassword(passwordEncryptor.encryptPassword(user.getPassword()));
+
         return usuarioRepository.save(user);
     }
 
@@ -88,6 +94,11 @@ public class UsuarioServicioImplementation implements UsuarioServicio{
     }
 
     @Override
+    public List<Compra> listarCompras(Integer codigo) {
+        return usuarioRepository.obtenerProductosComprados(codigo);
+    }
+
+    @Override
     public Usuario obtenerUsuario(Integer codigo) throws Exception {
 
         Optional<Usuario> buscado = buscarPorCodigo(codigo);
@@ -105,8 +116,8 @@ public class UsuarioServicioImplementation implements UsuarioServicio{
         if (buscado.isEmpty()){
             throw new Exception("El email ingresado no está asociado a niguna cuenta");
         }
-        buscado = usuarioRepository.findByEmailAndPassword(email, password);
-        if(buscado.isEmpty()){
+        StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+        if(!passwordEncryptor.checkPassword(password, buscado.get().getPassword())){
             throw new Exception("La contraseña es incorrecta");
         }
 

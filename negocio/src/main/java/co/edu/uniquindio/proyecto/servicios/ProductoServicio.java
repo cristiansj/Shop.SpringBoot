@@ -3,6 +3,7 @@ package co.edu.uniquindio.proyecto.servicios;
 import co.edu.uniquindio.proyecto.dto.ProductoCarrito;
 import co.edu.uniquindio.proyecto.entidades.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ProductoServicio {
@@ -29,7 +30,7 @@ public interface ProductoServicio {
 
     Compra comprarProductos(Usuario usuario, List<ProductoCarrito> productos, String medioPago) throws Exception;
 
-    List<Producto> buscarProducto(String nombreProducto, String[] filtros) throws Exception;
+    List<Producto> buscarProducto(String nombreProducto, Categoria categoria) throws Exception;
 
     List<Producto> listarProductosPorUsuario(Integer codigoUsuario) throws Exception;
 
@@ -39,7 +40,13 @@ public interface ProductoServicio {
 
     Integer sacarCalificaciónProducto(Producto producto)throws Exception;
 
+    List<Producto> listarPorCalificación(Integer calificación);
+
+    Integer contarFavorito(Integer codigoProducto);
+
     List<Categoria> listarCategoria();
+
+    void subastarProducto(LocalDateTime ldt, Producto producto) throws Exception;
 
     Categoria obtenerCategoria(String categoria) throws Exception;
 }

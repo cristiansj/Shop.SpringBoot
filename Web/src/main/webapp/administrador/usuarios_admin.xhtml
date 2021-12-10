@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="../WEB-INF/template.xhtml">
+    <ui:define name="title">Informe de usuarios</ui:define>
+    <ui:define name="content">
+        <h1>Lista de usuarios registrados</h1>
+
+        <h:form>
+            <p:dataView value="#{adminBean.usuarios}" paginator="true" rows="3" var="usuario" gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+                <p:dataViewGridItem>
+                    <div class="card">
+                        <img src="/uploads/avatar.png" class="card-img-top" alt="..."/>
+                        <div class="card-body">
+                            <h5 class="card-title">#{usuario.nombre}</h5>
+
+                            <p class="card-text">#{usuario.email}</p>
+                            <hr />
+                        </div>
+                    </div>
+                </p:dataViewGridItem>
+
+                <p:dataViewListItem>
+                    <div class="row d-flex item-pro">
+                        <div class="col-lg-2 col-md-1" style="text-align: center">
+                            <p:graphicImage url="/uploads/avatar.png" styleClass="imagen-producto"/>
+                        </div>
+                        <div class="col-lg-8 col-md-1 align-self-center">
+                            <p:outputPanel>
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputText value="Nombre: "/>
+                                    <h:outputText value="#{usuario.nombre}" style="font-weight: bold"/>
+                                    <h:outputText value="Nickname: "/>
+                                    <h:outputText value="#{usuario.username}"/>
+                                    <h:outputText value="Email: "/>
+                                    <h:outputText value="#{usuario.email}"/>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </div>
+                    </div>
+                </p:dataViewListItem>
+            </p:dataView>
+        </h:form>
+        <h:form>
+            <h1>Usuarios por ciudad</h1>
+            <p:commandButton value="Mostrar" actionListener="#{adminBean.listarUsuarioPorCiudad}" update="panel"/>
+            <div align="center">
+                <h:panelGroup id="panel" layout="block">
+                    <p:chart type="pie" model="#{adminBean.pieModel}" style="width: 800px; height: 500px" rendered="#{adminBean.mostrar}"/>
+                </h:panelGroup>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

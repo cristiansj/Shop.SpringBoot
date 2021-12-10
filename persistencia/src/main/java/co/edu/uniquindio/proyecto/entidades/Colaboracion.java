@@ -1,7 +1,7 @@
 package co.edu.uniquindio.proyecto.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -21,5 +21,6 @@ public class Colaboracion implements Serializable {
 
     @OneToMany(mappedBy = "colaboracion")
     @ToString.Exclude
+    @JsonIgnore
     private List<Producto> producto;
 }

@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.repositorios;
 
+import co.edu.uniquindio.proyecto.entidades.Compra;
 import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 import org.springframework.data.domain.Page;
@@ -27,5 +28,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     @Query("select p from Usuario u, IN (u.productosFavoritos) p where u.email = :email")
     List<Producto> obtenerProductosFavoritos(String email);
 
-
+    @Query("select c from Usuario u, IN (u.compras) c where u.codigo = :codigo")
+    List<Compra> obtenerProductosComprados(Integer codigo);
 }

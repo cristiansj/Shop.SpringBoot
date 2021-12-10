@@ -45,7 +45,7 @@
                         </div>
                         <div class="col-lg-2 col-md-1 align-self-center">
                             <p:commandButton icon="pi pi-trash" update="@form" action="#{seguridadBean.eliminarProductoFavorito(producto)}" styleClass="btn btn-white border-secondary bg-white btn-md mb-2 float-end"/>
-                            <p:commandButton value="Ver Detalle" styleClass="ui-button-raised" icon="pi pi-arrow-right" iconPos="right" action="#{inicioBean.irADetalle(producto.codigo)}"/>
+                            <p:commandButton value="Ver Detalle" styleClass="ui-button-raised" icon="pi pi-arrow-right" iconPos="right" action="#{inicioBean.irADetallePorUsuario(producto.codigo)}"/>
                         </div>
                     </div>
                 </p:dataViewListItem>

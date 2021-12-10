@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="../WEB-INF/template.xhtml">
+    <ui:define name="title">Informe de compras</ui:define>
+    <ui:define name="content">
+        <h1>Informe de compras realizadas</h1>
+
+        <h:form>
+            <p:dataView value="#{adminBean.detalleCompras}" paginator="true" rows="3" var="detalleCompra" gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+                <p:dataViewGridItem>
+                    <div class="card">
+                        <img src="/uploads/producto.png" class="card-img-top" alt="..."/>
+                        <div class="card-body">
+                            <h5 class="card-title">#{detalleCompra.producto}</h5>
+
+                            <p class="card-text">#{detalleCompra.comprador}</p>
+                            <p class="card-text">#{detalleCompra.fecha}</p>
+                            <hr />
+                            <p:commandButton value="Ver Detalle" styleClass="ui-button-raised" icon="pi pi-arrow-right" iconPos="right" action="#{inicioBean.irADetalle(producto.codigo)}"/>
+                        </div>
+                    </div>
+                </p:dataViewGridItem>
+
+                <p:dataViewListItem>
+                    <div class="row d-flex item-pro">
+                        <div class="col-lg-2 col-md-1" style="text-align: center">
+                            <p:graphicImage url="/uploads/producto.png" styleClass="imagen-producto"/>
+                        </div>
+                        <div class="col-lg-8 col-md-1 align-self-center">
+                            <p:outputPanel>
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputText value="Usuario: "/>
+                                    <h:outputText value="#{detalleCompra.comprador}" style="font-weight: bold"/>
+                                    <h:outputText value="Producto: "/>
+                                    <h:outputText value="#{detalleCompra.producto}"/>
+                                    <h:outputText value="Unidades: "/>
+                                    <h:outputText value="#{detalleCompra.unidades}"/>
+                                    <h:outputText value="Fecha: "/>
+                                    <h:outputText value="#{detalleCompra.fecha}"/>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </div>
+                    </div>
+                </p:dataViewListItem>
+            </p:dataView>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

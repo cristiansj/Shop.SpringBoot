@@ -11,6 +11,7 @@
     <ui:define name="title">Inicio</ui:define>
     <ui:define name="content">
         <h1>Lista de productos</h1>
+
         <h:form>
             <p:dataView value="#{inicioBean.productos}" paginator="true" rows="3" var="producto" gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 
@@ -19,6 +20,7 @@
                         <img src="/uploads/#{producto.imagenPrincipal}" class="card-img-top" alt="..."/>
                         <div class="card-body">
                             <h5 class="card-title">#{producto.nombre}</h5>
+
                             <p class="card-text">#{producto.precio}</p>
                             <hr />
                             <p:commandButton value="Ver Detalle" styleClass="ui-button-raised" icon="pi pi-arrow-right" iconPos="right" action="#{inicioBean.irADetalle(producto.codigo)}"/>
@@ -48,7 +50,6 @@
                         </div>
                     </div>
                 </p:dataViewListItem>
-
             </p:dataView>
         </h:form>
     </ui:define>

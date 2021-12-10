@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,6 +30,7 @@ public class Compra implements Serializable {
 
     @OneToMany(mappedBy = "codigoCompra")
     @ToString.Exclude
+    @JsonIgnore
     private List<DetalleCompra> detallesCompras;
 
     public Compra(LocalDateTime fechaCompra, String medioPago, Usuario usuario) {

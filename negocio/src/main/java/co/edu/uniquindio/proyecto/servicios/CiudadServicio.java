@@ -12,4 +12,6 @@ public interface CiudadServicio {
     Ciudad obtenerPorID(Integer codigo) throws Exception;
 
     List<Ciudad> listarCiudad();
+
+    Integer numeroDeUsuariosPorCiudad(Ciudad ciudad);
 }

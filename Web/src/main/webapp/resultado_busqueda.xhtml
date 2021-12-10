@@ -10,9 +10,9 @@
 <ui:composition template="WEB-INF/template.xhtml">
     <ui:define name="title">Resultados de busqueda</ui:define>
     <ui:define name="content">
-        <h1>Resultados de la Busqueda para '${busquedaBean.busquedaParam}'</h1>
+        <h1>Resultados de la Busqueda para '${resultadoBusquedaBean.busquedaParam}'</h1>
         <h:form>
-            <p:dataView value="#{busquedaBean.productos}" paginator="true" rows="3" var="producto" gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+            <p:dataView value="#{resultadoBusquedaBean.productosFiltrados}" paginator="true" rows="3" var="producto" gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 
                 <p:dataViewGridItem>
                     <div class="card">

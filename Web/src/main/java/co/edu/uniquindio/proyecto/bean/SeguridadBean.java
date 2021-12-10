@@ -1,17 +1,19 @@
 package co.edu.uniquindio.proyecto.bean;
 
 import co.edu.uniquindio.proyecto.dto.ProductoCarrito;
-import co.edu.uniquindio.proyecto.entidades.Comentario;
-import co.edu.uniquindio.proyecto.entidades.Producto;
-import co.edu.uniquindio.proyecto.entidades.Usuario;
+import co.edu.uniquindio.proyecto.dto.ProductoComprado;
+import co.edu.uniquindio.proyecto.entidades.*;
+import co.edu.uniquindio.proyecto.servicios.AdministradorServicio;
 import co.edu.uniquindio.proyecto.servicios.ProductoServicio;
+import co.edu.uniquindio.proyecto.servicios.SendMailService;
 import co.edu.uniquindio.proyecto.servicios.UsuarioServicio;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -28,6 +30,12 @@ public class SeguridadBean implements Serializable {
     private boolean autenticado;
 
     @Getter @Setter
+    private boolean admin;
+
+    @Getter @Setter
+    private Administrador administradorSesion;
+
+    @Getter @Setter
     private String email, password;
 
     @Getter @Setter
@@ -39,6 +47,9 @@ public class SeguridadBean implements Serializable {
     @Autowired
     private ProductoServicio productoServicio;
 
+    @Autowired
+    AdministradorServicio administradorServicio;
+
     @Getter @Setter
     private List<ProductoCarrito> productosCarrito;
 
@@ -49,12 +60,19 @@ public class SeguridadBean implements Serializable {
     @Getter @Setter
     private Double subTotal;
 
+
+    private List<ProductoComprado> misCompras;
+
+    @Autowired
+    SendMailService sendMailService;
+
     @PostConstruct
     public void inicializar(){
         this.subTotal = 0D;
         this.productosCarrito = new ArrayList<>();
         this.misProductos = new ArrayList<>();
         this.misProductosFavoritos = new ArrayList<>();
+        this.misCompras = new ArrayList<>();
     }
 
     public String iniciarSesion(){
@@ -64,14 +82,21 @@ public class SeguridadBean implements Serializable {
                 autenticado = true;
                 return "/index.xhtml?faces-redirect=true";
             } catch (Exception e) {
-                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Alerta",e.getMessage());
-                FacesContext.getCurrentInstance().addMessage("login-bean",fm);
+                try{
+                    administradorSesion = administradorServicio.hacerLogin(email, password);
+                    this.admin = true;
+                    return "/index.xhtml?faces-redirect=true";
+                }catch (Exception e1){
+                    FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Alerta",e.getMessage());
+                    FacesContext.getCurrentInstance().addMessage("login-bean",fm);
+                }
             }
         }
         return "";
     }
 
     public String cerrarSesion(){
+        this.admin = false;
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "/index.xhtml?faces-redirect=true";
     }
@@ -93,7 +118,7 @@ public class SeguridadBean implements Serializable {
     public void eliminarDelCarrito(int indice){
         subTotal -= productosCarrito.get(indice).getPrecio();
         productosCarrito.remove(indice);
-        FacesMessage fm1 = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Alerta", "se ha borrado exitosamente el producto");
+        FacesMessage fm1 = new FacesMessage(FacesMessage.SEVERITY_INFO,"Alerta", "se ha borrado exitosamente el producto");
         FacesContext.getCurrentInstance().addMessage("borrar-bean", fm1);
     }
 
@@ -104,7 +129,8 @@ public class SeguridadBean implements Serializable {
         }
     }
 
-    public void comprar(){
+    @PostMapping("/sendMail")
+    public String comprar(){
         boolean bandera = true;
         if (productosCarrito != null && !productosCarrito.isEmpty()) {
             for (int i = 0; i < productosCarrito.size() && bandera; i++){
@@ -122,9 +148,12 @@ public class SeguridadBean implements Serializable {
             }
             if (bandera) {
                 try {
-                    productoServicio.comprarProductos(usuarioSesion, productosCarrito, "PSE");
+                    Compra compra = productoServicio.comprarProductos(usuarioSesion, productosCarrito, "PSE");
                     productosCarrito.clear();
                     subTotal = 0D;
+                    sendMailService.sendEmail("unishopdamomu@gmail.com", usuarioSesion.getEmail(),
+                                "Información de compra",
+                                "Usted ha realizado una compra desde Unishop usando este correo, muchas gracias por preferirnos");
                     FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO,"Alerta", "compra exitosa, gracias por preferirnos :)");
                     FacesContext.getCurrentInstance().addMessage("comprar-bean", fm);
                 } catch (Exception e) {
@@ -133,6 +162,7 @@ public class SeguridadBean implements Serializable {
                 }
             }
         }
+        return "../index.xhtml";
     }
 
     public String getTelefonos(){
@@ -182,4 +212,31 @@ public class SeguridadBean implements Serializable {
             e.printStackTrace();
         }
     }
+
+    public List<ProductoComprado> getMisCompras(){
+        misCompras.clear();
+        List<Compra> usuarioCompra = usuarioServicio.listarCompras(usuarioSesion.getCodigo());
+        List<DetalleCompra> comprasUsuario = new ArrayList<>();
+        for (int i = 0; i < usuarioCompra.size(); i++) {
+            comprasUsuario = usuarioCompra.get(i).getDetallesCompras();
+            for (int j = 0; j < comprasUsuario.size(); j++) {
+                Producto producto = comprasUsuario.get(j).getCodigoProducto();
+                ProductoComprado productoComprado = new ProductoComprado(producto.getCodigo(),producto.getNombre(), producto.getImagenPrincipal(), producto.getPrecio(), comprasUsuario.get(j).getUnidades(),usuarioCompra.get(i).getFechaCompra());
+                misCompras.add(productoComprado);            }
+        }
+        return this.misCompras;
+    }
+
+    public void send(){
+    }
+
+    public String ir(){
+        return "registrar_usuario.xhtml?faces-redirect=true";
+    }
+
+    @GetMapping("/")
+    public String enviar(){
+        return "index.xhtml";
+    }
+
 }

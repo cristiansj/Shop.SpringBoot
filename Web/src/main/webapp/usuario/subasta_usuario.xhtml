@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="../WEB-INF/template.xhtml">
+    <ui:define name="title">Subasta</ui:define>
+    <ui:define name="content">
+        <h1>Mis productos</h1>
+        <h:form>
+            <p:dataView value="#{seguridadBean.misProductos}" paginator="true" rows="3" var="producto" gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+                <p:dataViewGridItem>
+                    <div class="card">
+                        <img src="/uploads/#{producto.imagenPrincipal}" class="card-img-top" alt="..."/>
+                        <div class="card-body">
+                            <h5 class="card-title">#{producto.nombre}</h5>
+                            <p class="card-text">#{producto.precio}</p>
+                            <hr />
+                            <p:commandButton value="Ver Detalle" styleClass="ui-button-raised" icon="pi pi-arrow-right" iconPos="right" action="#{inicioBean.irADetalle(producto.codigo)}"/>
+                        </div>
+                    </div>
+                </p:dataViewGridItem>
+
+                <p:dataViewListItem>
+                    <div class="row d-flex item-pro">
+                        <div class="col-lg-2 col-md-1" style="text-align: center">
+                            <p:graphicImage url="/uploads/#{producto.imagenPrincipal}" styleClass="imagen-producto"/>
+                        </div>
+                        <div class="col-lg-8 col-md-1 align-self-center">
+                            <p:outputPanel>
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputText value="Nombre: "/>
+                                    <h:outputText value="#{producto.nombre}" style="font-weight: bold"/>
+                                    <h:outputText value="Precio: "/>
+                                    <h:outputText value="#{producto.precio}"/>
+                                    <h:outputText value="Categorias: "/>
+                                    <h:outputText value="#{producto.categoriasEstilo}"/>
+                                    <div>
+                                        <h:outputText value="Subastado"/>
+                                    </div>
+
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </div>
+                        <div class="col-lg-2 col-md-1 align-self-center">
+                            <p>Horas
+                                <p:spinner value="#{producto.descuento}" min="0" max="24" styleClass="text-center">
+                                    <p:ajax listener="#{seguridadBean.actualizarDescuento(producto)}"/>
+                                </p:spinner>
+                            </p>
+                            <p:commandButton value="Subastar" styleClass="ui-button-raised" icon="pi pi-arrow-right" iconPos="right" action="#{inicioBean.irADetallePorUsuario(producto.codigo)}"/>
+                        </div>
+                    </div>
+                </p:dataViewListItem>
+
+            </p:dataView>
+            <div class="text-end">
+                <p:commandButton value="subastas" icon="pi pi-dollar"/>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

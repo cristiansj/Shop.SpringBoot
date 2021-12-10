@@ -1,7 +1,7 @@
 package co.edu.uniquindio.proyecto.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
@@ -31,7 +31,7 @@ public class Producto implements Serializable {
     private String nombre;
 
     @Column(nullable = false)
-    @Positive
+    @PositiveOrZero
     private Integer disponibilidad;
 
     @Column(length = 250)
@@ -56,6 +56,7 @@ public class Producto implements Serializable {
 
     @ManyToMany
     @ToString.Exclude
+    @JsonIgnore
     private List<Categoria> categorias = new ArrayList<Categoria>();
 
     @ManyToOne
@@ -67,18 +68,22 @@ public class Producto implements Serializable {
 
     @OneToMany(mappedBy = "codigoProducto")
     @ToString.Exclude
+    @JsonIgnore
     private List<Chat> chats;
 
     @OneToMany(mappedBy = "codigoProducto")
     @ToString.Exclude
+    @JsonIgnore
     private List<Comentario> comentarios;
 
     @OneToMany(mappedBy = "producto")
     @ToString.Exclude
+    @JsonIgnore
     private List<Subasta> subastas;
 
     @OneToMany(mappedBy = "codigoProducto")
     @ToString.Exclude
+    @JsonIgnore
     private List<DetalleCompra> detalleCompras;
 
     public String getImagenPrincipal() {

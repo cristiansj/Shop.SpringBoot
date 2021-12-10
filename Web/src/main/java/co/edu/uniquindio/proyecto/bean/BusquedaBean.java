@@ -32,6 +32,9 @@ public class BusquedaBean implements Serializable {
     private List<Categoria> categorias;
 
     @Getter @Setter
+    private  Categoria categoria;
+
+    @Getter @Setter
     private List<Categoria> filtros;
 
     @Getter @Setter
@@ -47,16 +50,13 @@ public class BusquedaBean implements Serializable {
     public void inicializar(){
         categorias = categoriaServicio.listarCategoria();
         filtros = new ArrayList<>();
-        if (busquedaParam != null && !busquedaParam.isEmpty()){
-            try {
-                productos = productoServicio.buscarProducto(busquedaParam,null);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 
-    public String buscar(){
-        return "resultado_busqueda?faces-redirect=true&amp;busqueda="+busqueda;
+    public String buscar() {
+        if (categoria != null) {
+            return "resultado_busqueda?faces-redirect=true&amp;busqueda="+busqueda+"&amp;categoria="+categoria.getCodigo();
+        }else{
+            return "resultado_busqueda?faces-redirect=true&amp;busqueda="+busqueda+"&amp;categoria=0";
+        }
     }
 }

@@ -25,9 +25,20 @@ public class InicioBean implements Serializable {
     @PostConstruct
     public void inicializar(){
         this.productos = productoServicio.listarProductos();
+        for (int i = 0; i < productos.size();i++) {
+            System.out.println(i+":"+productos.get(i).getDisponibilidad());
+            if (productos.get(i).getDisponibilidad() == 0) {
+                productos.remove(i);
+                i--;
+            }
+        }
     }
 
     public String irADetalle(String id){
         return "/detalle_producto.xhtml?faces-redirect=true&amp;producto="+id;
+    }
+
+    public String irADetallePorUsuario(String id){
+        return "../detalle_producto.xhtml?faces-redirect=true&amp;producto="+id;
     }
 }
